@@ -115,6 +115,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Logger',
           to: '/logger'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Example 1',
+          to: '/examples/1'
         }
       ],
       miniVariant: false,
