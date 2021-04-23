@@ -1,5 +1,5 @@
-const Example1 = require('./example1/service')
+const ColorPicker = require('./colorpicker/service')
 
 module.exports = function (app) {
-  app.configure(Example1)
+  app.configure(ColorPicker)
 }

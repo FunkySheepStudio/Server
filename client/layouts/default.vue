@@ -118,8 +118,8 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Example 1',
-          to: '/examples/1'
+          title: 'Color Picker',
+          to: '/examples/colorpicker'
         }
       ],
       miniVariant: false,
