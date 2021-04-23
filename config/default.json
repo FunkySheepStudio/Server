@@ -1,0 +1,32 @@
+{
+  "host": "0.0.0.0",
+  "port": 3001,
+  "logLevel": 0,
+  "paginate": {
+    "default": 1000,
+    "max": 50000
+  },
+  "authentication": {
+    "entity": "user",
+    "service": "/api/users",
+    "secret": "54zzq199Pmkc5ss2XSh0pqANH7w=",
+    "authStrategies": [
+      "jwt",
+      "local"
+    ],
+    "jwtOptions": {
+      "header": {
+        "typ": "access"
+      },
+      "audience": "https://yourdomain.com",
+      "issuer": "feathers",
+      "algorithm": "HS256",
+      "expiresIn": "1d"
+    },
+    "local": {
+      "entity": "user",
+      "usernameField": "_id",
+      "passwordField": "password"
+    }
+  }
+}
