@@ -32,9 +32,10 @@ export default {
   computed: {
     ...mapGetters('colorpicker', { colorpicker: 'find', get: 'get' })
   },
-  async created () {},
+  created () {},
   mounted () {
     this.findColorpicker()
+    this.loaded = false
   },
   methods: {
     ...mapActions('colorpicker', { findColorpicker: 'find', create: 'create', patch: 'patch' }),

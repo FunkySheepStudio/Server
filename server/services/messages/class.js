@@ -40,12 +40,15 @@ exports.Messages = class Messages extends ServiceClass {
 
   send (userId, data) {
     const message = new Message(data)
-    const playerSocket = this.sockets.find(socket => socket.userId === userId)
+    const playerSockets = this.sockets.filter(socket => socket.userId === userId)
 
-    if (playerSocket) {
-      playerSocket.send(JSON.stringify(message))
-    } else {
+    if (playerSockets.length >= 1) {
+      const msg = JSON.stringify(message)
+      playerSockets.forEach((socket) => {
+        socket.send(msg)
+      })
+    } /*  else {
       this.sockets = this.sockets.filter(s => s !== playerSocket)
-    }
+    } */
   }
 }
