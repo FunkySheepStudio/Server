@@ -120,6 +120,11 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Color Picker',
           to: '/examples/colorpicker'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Movements',
+          to: '/examples/movements'
         }
       ],
       miniVariant: false,
