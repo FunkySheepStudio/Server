@@ -5,6 +5,11 @@
       game="movements"
       @loaded="loadColorPicker"
     />
+    <Unity
+      path="/_examples/"
+      game="movements"
+      @loaded="loadColorPicker"
+    />
   </section>
 </template>
 <script>
