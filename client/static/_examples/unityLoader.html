@@ -26,12 +26,19 @@
       </div>
     </div>
     <script>
-      var buildUrl = "Build";
-      var loaderUrl = buildUrl + "/colorpicker.loader.js";
+      const queryString = window.location.search
+      const urlParams = new URLSearchParams(queryString);
+      const game = urlParams.get('game')
+      console.log(game)
+
+      var buildUrl = game + "/Build/";
+      var loaderUrl = buildUrl + "/" + game + ".loader.js";
+
+      console.log(loaderUrl)
       var config = {
-        dataUrl: buildUrl + "/colorpicker.data",
-        frameworkUrl: buildUrl + "/colorpicker.framework.js",
-        codeUrl: buildUrl + "/colorpicker.wasm",
+        dataUrl: buildUrl + "/" + game + ".data",
+        frameworkUrl: buildUrl + "/" + game + ".framework.js",
+        codeUrl: buildUrl + "/" + game + ".wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Client",

@@ -1,5 +1,6 @@
 <template>
   <iframe
+    name="UnityFrame"
     :src="sources"
     width="1000"
     height="660"
@@ -37,14 +38,14 @@ export default {
   },
   data () {
     return {
-      sources: this.path + this.game + '/index.html'
+      //  sources: this.path + this.game + '/index.html'
+      sources: '/_examples/unityLoader.html?game=' + this.game
     }
   },
   beforeMount () {
   },
   mounted () {
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
