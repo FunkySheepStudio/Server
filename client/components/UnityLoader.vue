@@ -2,8 +2,8 @@
   <iframe
     name="UnityFrame"
     :src="sources"
-    width="1000"
-    height="660"
+    :width="width + 20"
+    :height="height + 25"
   />
 </template>
 
@@ -11,10 +11,6 @@
 export default {
   name: 'UnityWebGL',
   props: {
-    path: {
-      type: String,
-      default: '/'
-    },
     game: {
       type: String,
       default: 'Client'
@@ -29,17 +25,16 @@ export default {
     },
     width: {
       type: Number,
-      default: 100
+      default: 300
     },
     height: {
       type: Number,
-      default: 100
+      default: 300
     }
   },
   data () {
     return {
-      //  sources: this.path + this.game + '/index.html'
-      sources: '/_examples/unityLoader.html?game=' + this.game
+      sources: '/_examples/unityLoader.html?game=' + this.game + '&width=' + this.width + '&height=' + this.height
     }
   },
   beforeMount () {
@@ -49,3 +44,9 @@ export default {
   methods: {}
 }
 </script>
+<style scoped>
+  iframe
+  {
+      border:none;
+  }
+</style>
