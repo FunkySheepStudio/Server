@@ -1,13 +1,12 @@
 <template>
   <section>
     <Unity
+      ref="unity"
       path="/_examples/"
       game="colorpicker"
-      @loaded="loadColorPicker"
     />
     <v-color-picker
       v-model="color"
-      :disabled="!loaded"
       dot-size="25"
       swatches-max-height="200"
       @update:color="updateColor"
@@ -16,7 +15,6 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { getUnityId } from '../../lib/unityDb'
 import Unity from '~/components/UnityLoader'
 export default {
   components: {
@@ -24,9 +22,7 @@ export default {
   },
   data () {
     return {
-      color: '',
-      unityId: '',
-      loaded: false
+      color: ''
     }
   },
   computed: {
@@ -34,39 +30,27 @@ export default {
   },
   created () {},
   mounted () {
+    this.userId = localStorage.getItem('user')
     this.findColorpicker()
-    this.loaded = false
   },
   methods: {
     ...mapActions('colorpicker', { findColorpicker: 'find', create: 'create', patch: 'patch' }),
-    loadColorPicker () {
-      getUnityId()
-        .then((id) => {
-          this.unityId = id
-          //  this.unityId = 'e3734627-e667-4fa2-b34e-669ef73615a1'
-          this.loaded = true
-        })
-    },
     updateColor (color) {
-      if (this.unityId !== '') {
-        this.findColorpicker({
-          query: {
-            _id: this.unityId
+      this.findColorpicker({
+        query: {
+          _id: this.userId
+        }
+      })
+        .then((count) => {
+          if (count.total === 0) {
+            this.create({
+              _id: this.userId,
+              color: color.hex
+            })
+          } else {
+            this.patch([this.userId, { _id: this.userId, color: this.color }])
           }
         })
-          .then((count) => {
-            if (count.total === 0) {
-              this.create({
-                _id: this.unityId,
-                color: color.hex
-              })
-            } else {
-              this.patch([this.unityId, { _id: this.unityId, color: this.color }])
-            }
-          })
-      } else {
-        this.loadColorPicker()
-      }
     }
   }
 }

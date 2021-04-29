@@ -13,7 +13,7 @@ module.exports = {
   ],
   plugins: [
   ],
-  ignorePatterns: ['/client/static/*.js'],
+  ignorePatterns: ['**/client/static/*.js'],
   // add your custom rules here
   rules: {}
 }

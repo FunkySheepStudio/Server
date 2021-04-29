@@ -29,9 +29,9 @@
       var buildUrl = "Build";
       var loaderUrl = buildUrl + "/colorpicker.loader.js";
       var config = {
-        dataUrl: buildUrl + "/colorpicker.data.unityweb",
-        frameworkUrl: buildUrl + "/colorpicker.framework.js.unityweb",
-        codeUrl: buildUrl + "/colorpicker.wasm.unityweb",
+        dataUrl: buildUrl + "/colorpicker.data",
+        frameworkUrl: buildUrl + "/colorpicker.framework.js",
+        codeUrl: buildUrl + "/colorpicker.wasm",
         streamingAssetsUrl: "StreamingAssets",
         companyName: "DefaultCompany",
         productName: "Client",
@@ -64,6 +64,7 @@
         createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
+          unityInstance.SendMessage('User', 'defineId', localStorage.getItem('user'))
           loadingBar.style.display = "none";
           fullscreenButton.onclick = () => {
             unityInstance.SetFullscreen(1);
