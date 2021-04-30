@@ -10,6 +10,7 @@
       game="movements"
       @loaded="loadColorPicker"
     />
+    {{ movements() }}
   </section>
 </template>
 <script>
@@ -28,14 +29,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('colorpicker', { colorpicker: 'find', get: 'get' })
+    ...mapGetters('movements', { movements: 'find', get: 'get' })
   },
   async created () {},
   mounted () {
-    this.findColorpicker()
+    this.findMovements()
   },
   methods: {
-    ...mapActions('colorpicker', { findColorpicker: 'find', create: 'create', patch: 'patch' }),
+    ...mapActions('movements', { findMovements: 'find', create: 'create', patch: 'patch' }),
     loadColorPicker () {
       getUnityId()
         .then((id) => {
@@ -46,7 +47,7 @@ export default {
     },
     updateColor (color) {
       if (this.unityId !== '') {
-        this.findColorpicker({
+        this.findMovements({
           query: {
             _id: this.unityId
           }
