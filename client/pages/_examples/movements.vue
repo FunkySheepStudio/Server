@@ -10,7 +10,6 @@
       game="movements"
       @loaded="loadColorPicker"
     />
-    {{ movements() }}
   </section>
 </template>
 <script>

@@ -1,11 +1,17 @@
 const ServiceClass = require('../../network.service.class')
 
 exports.Movements = class Movements extends ServiceClass {
-  patch (id, data, params) {
-    return super.patch(id, data, params)
+  setPosition (msg) {
+    this.exist(msg.data._id)
+      .then((exist) => {
+        if (exist) {
+          return this.patch(msg.data._id, msg.data)
+        } else {
+          return this.create(msg.data)
+        }
+      })
       .then((data) => {
-        this.send(id, 'patch', data)
-        return data
+        this.send(data._id, 'setPosition', data)
       })
   }
 }
