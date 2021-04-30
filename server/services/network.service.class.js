@@ -15,7 +15,14 @@ module.exports = class NetServiceClass extends ServiceClass {
     if (msg.data.request) {
       this[msg.data.request](msg)
     } else {
-      this.patch(msg.data._id, msg.data)
+      this.exist(msg.data._id)
+        .then((exist) => {
+          if (exist) {
+            this.patch(msg.data._id, msg.data)
+          } else {
+            this.create(msg.data)
+          }
+        })
         .catch((err) => {
           this.app.log(err)
         })
