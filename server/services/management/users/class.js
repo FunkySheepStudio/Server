@@ -13,15 +13,9 @@ exports.Users = class Users extends ServiceClass {
 
   //  On user connection
   onConnect (authResult) {
-    //  this.setOnline(authResult.user)
   }
 
   //  On user diconnection
   onDisconnect (connection) {
-    if (connection.user) {
-      this.setOffline(connection.user._id)
-    } else {
-      return false
-    }
   }
 }
