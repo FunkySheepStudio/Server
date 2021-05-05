@@ -103,28 +103,38 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
+          title: 'Connections',
+          to: '/management/connections'
+        },
+        {
+          icon: 'mdi-chart-bubble',
           title: 'Users',
-          to: '/users'
+          to: '/management/users'
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Messages',
-          to: '/messages'
+          to: '/management/messages'
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Logger',
-          to: '/logger'
+          to: '/management/logger'
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Color Picker',
-          to: '/examples/colorpicker'
+          to: '/games/colorpicker'
         },
         {
           icon: 'mdi-chart-bubble',
           title: 'Movements',
-          to: '/examples/movements'
+          to: '/games/movements'
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'Text',
+          to: '/games/updatetext'
         }
       ],
       miniVariant: false,

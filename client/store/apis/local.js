@@ -38,7 +38,7 @@ socket.on('connect', (socket) => {
     password
   }
 
-  feathersClient.service('/api/users').create(credentials)
+  feathersClient.service('/api/management/users').create(credentials)
     .then(() => {
       feathersClient.service('/api/authentication').create({ ...credentials, strategy: 'local' })
     })

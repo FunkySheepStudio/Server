@@ -1,0 +1,73 @@
+<template>
+  <section>
+    <Unity
+      path="/_games/"
+      game="movements"
+      @loaded="loadColorPicker"
+    />
+    <Unity
+      path="/_games/"
+      game="movements"
+      @loaded="loadColorPicker"
+    />
+    {{ movements() }}
+  </section>
+</template>
+<script>
+import { mapActions, mapGetters } from 'vuex'
+import { getUnityId } from '../../lib/unityDb'
+import Unity from '~/components/UnityLoader'
+export default {
+  components: {
+    Unity
+  },
+  data () {
+    return {
+      color: '',
+      unityId: '',
+      loaded: false
+    }
+  },
+  computed: {
+    ...mapGetters('movements', { movements: 'find', get: 'get' })
+  },
+  async created () {},
+  mounted () {
+    this.findMovements()
+  },
+  methods: {
+    ...mapActions('movements', { findMovements: 'find', create: 'create', patch: 'patch' }),
+    loadColorPicker () {
+      getUnityId()
+        .then((id) => {
+          this.unityId = id
+          //  this.unityId = 'e3734627-e667-4fa2-b34e-669ef73615a1'
+          this.loaded = true
+        })
+    },
+    updateColor (color) {
+      if (this.unityId !== '') {
+        this.findMovements({
+          query: {
+            _id: this.unityId
+          }
+        })
+          .then((count) => {
+            if (count.total === 0) {
+              this.create({
+                _id: this.unityId,
+                color: color.hex
+              })
+            } else {
+              this.patch([this.unityId, { _id: this.unityId, color: this.color }])
+            }
+          })
+      } else {
+        this.loadColorPicker()
+      }
+    }
+  }
+}
+</script>
+<style>
+</style>

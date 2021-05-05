@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>Unity WebGL Player | Client</title>
+  </head>
+  <body>
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+    <script>
+      const queryString = window.location.search
+      const urlParams = new URLSearchParams(queryString);
+      const game = urlParams.get('game')
+
+      var buildUrl = game + "/Build/";
+      var loaderUrl = buildUrl + "/" + game + ".loader.js";
+
+      var config = {
+        dataUrl: buildUrl + "/" + game + ".data",
+        frameworkUrl: buildUrl + "/" + game + ".framework.js",
+        codeUrl: buildUrl + "/" + game + ".wasm",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "DefaultCompany",
+        productName: "Client",
+        productVersion: "0.1",
+      };
+
+      var canvas = document.querySelector("#unity-canvas");
+
+      canvas.style.width = urlParams.get('width') + "px";
+      canvas.style.height = urlParams.get('height') + "px";
+
+      var script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          //  progressBarFull.style.width = 100 * progress + "%";
+        }).then((unityInstance) => {
+          unityInstance.SendMessage('User', '_setUserId', localStorage.getItem('user'))
+        }).catch((message) => {
+          alert(message);
+        });
+      };
+      document.body.appendChild(script);
+    </script>
+  </body>
+</html>

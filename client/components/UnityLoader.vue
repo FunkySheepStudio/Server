@@ -34,7 +34,7 @@ export default {
   },
   data () {
     return {
-      sources: '/_examples/unityLoader.html?game=' + this.game + '&width=' + this.width + '&height=' + this.height
+      sources: '/_games/unityLoader.html?game=' + this.game + '&width=' + this.width + '&height=' + this.height
     }
   },
   beforeMount () {

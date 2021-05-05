@@ -30,7 +30,7 @@ exports.start = function start () {
   app.configure(configuration())
   const env = process.env.NODE_ENV || 'production'
   app.set('env', env)
-  app.set('homePath', path.join(require('os').homedir(), '.protfolio-game-server', app.get('env')))
+  app.set('homePath', path.join(require('os').homedir(), '.funky-sheep-server', app.get('env')))
 
   app.configure(services)
   app.configure(channels)
