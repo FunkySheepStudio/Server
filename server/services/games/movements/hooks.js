@@ -1,13 +1,19 @@
-function cleanMessage (context) {
+const cleanMessage = require('../../../hooks/cleanMessage')
+
+function getSocket (context) {
   context.data.data.socket = context.data.socket
-  context.data = context.data.data
   return context
 }
 
 function sendPosition (context) {
-  context.data.service = '/' + context.path
-  context.data.method = context.method
-  context.app.service('/api/management/messages').sendToUser(context.data._id, context.data, context.data.socket)
+  const message = {
+    data: {}
+  }
+  Object.assign(message.data, context.data.data)
+  message.data.service = '/' + context.path
+  message.data.method = context.method
+
+  context.app.service('/api/management/messages').sendToUser(message.data._id, message.data, message.data.socket)
   return context
 }
 
@@ -16,9 +22,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [cleanMessage, sendPosition],
-    update: [cleanMessage, sendPosition],
-    patch: [cleanMessage, sendPosition],
+    create: [getSocket, sendPosition, cleanMessage],
+    update: [getSocket, sendPosition, cleanMessage],
+    patch: [getSocket, sendPosition, cleanMessage],
     remove: []
   },
 
