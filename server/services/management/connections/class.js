@@ -23,7 +23,7 @@ exports.Connections = class Connections extends ServiceClass {
         const msg = JSON.parse(Buffer.from(data).toString())
         msg.direction = 'incoming'
         msg.receiveAt = new Date().getTime()
-        msg.data.socket = socket._id
+        msg.socket = socket._id
         this.app.service('/api/management/messages').create(msg)
       })
 

@@ -56,7 +56,7 @@ export default {
         },
         {
           text: 'Sockets',
-          value: 'data.socket'
+          value: 'socket'
         },
         {
           text: 'Service',
@@ -83,8 +83,8 @@ export default {
           value: '_id'
         },
         {
-          text: 'From',
-          value: 'from'
+          text: 'Socket',
+          value: 'socket'
         },
         {
           text: 'Service',

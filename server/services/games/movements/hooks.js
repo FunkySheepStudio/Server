@@ -1,3 +1,9 @@
+function cleanMessage (context) {
+  context.data.data.socket = context.data.socket
+  context.data = context.data.data
+  return context
+}
+
 function sendPosition (context) {
   context.data.service = '/' + context.path
   context.data.method = context.method
@@ -10,9 +16,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [sendPosition],
-    update: [sendPosition],
-    patch: [sendPosition],
+    create: [cleanMessage, sendPosition],
+    update: [cleanMessage, sendPosition],
+    patch: [cleanMessage, sendPosition],
     remove: []
   },
 
