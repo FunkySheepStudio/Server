@@ -10,7 +10,6 @@
       game="movements"
       @loaded="loadColorPicker"
     />
-    {{ movements() }}
   </section>
 </template>
 <script>
@@ -41,7 +40,6 @@ export default {
       getUnityId()
         .then((id) => {
           this.unityId = id
-          //  this.unityId = 'e3734627-e667-4fa2-b34e-669ef73615a1'
           this.loaded = true
         })
     },

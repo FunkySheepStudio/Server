@@ -2,7 +2,7 @@
   <section>
     <v-data-table
       :items="messages({query: {direction: 'incoming'}}).data"
-      :headers="headers"
+      :headers="headersIncoming"
     >
       <template #[`item.sentAt`]="{ item }">
         {{ new Date(item.sentAt).toLocaleString() }}
@@ -16,7 +16,7 @@
     </v-data-table>
     <v-data-table
       :items="messages({query: {direction: 'outgoing'}}).data"
-      :headers="headers"
+      :headers="headersOutgoing"
     >
       <template #[`item.sentAt`]="{ item }">
         {{ new Date(item.sentAt).toLocaleString() }}
@@ -28,7 +28,6 @@
         {{ JSON.stringify(item.data) }}
       </template>
     </v-data-table>
-    {{ messages() }}
   </section>
 </template>
 <script>
@@ -41,7 +40,7 @@ export default {
   },
   computed: {
     ...mapGetters('messages', { messages: 'find', get: 'get' }),
-    headers () {
+    headersIncoming () {
       return [
         {
           text: 'Send Date',
@@ -57,7 +56,7 @@ export default {
         },
         {
           text: 'Sockets',
-          value: 'socket'
+          value: 'data.socket'
         },
         {
           text: 'Service',
@@ -66,6 +65,34 @@ export default {
         {
           text: 'Request',
           value: 'request'
+        },
+        {
+          text: 'Data',
+          value: 'data'
+        }
+      ]
+    },
+    headersOutgoing () {
+      return [
+        {
+          text: 'Send Date',
+          value: 'sentAt'
+        },
+        {
+          text: 'ID',
+          value: '_id'
+        },
+        {
+          text: 'From',
+          value: 'from'
+        },
+        {
+          text: 'Service',
+          value: 'data.service'
+        },
+        {
+          text: 'Method',
+          value: 'data.method'
         },
         {
           text: 'Data',

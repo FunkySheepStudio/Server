@@ -10,9 +10,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [sendPosition],
+    update: [sendPosition],
+    patch: [sendPosition],
     remove: []
   },
 
@@ -20,9 +20,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [sendPosition],
-    update: [sendPosition],
-    patch: [sendPosition],
+    create: [],
+    update: [],
+    patch: [],
     remove: []
   },
 

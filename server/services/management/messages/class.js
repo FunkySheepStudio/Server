@@ -22,9 +22,9 @@ exports.Messages = class Messages extends ServiceClass {
   sendToSocket (socket, data, from) {
     const msg = {}
     msg.direction = 'outgoing'
+    msg.sentAt = new Date().getTime()
+    msg.socket = from
     msg.data = data
-    msg.data.sentAt = new Date().getTime()
-    msg.data.from = from
 
     const to = this.app.connections.find(connection => connection._id === socket)
     to.send(JSON.stringify(msg))
