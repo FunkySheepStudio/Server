@@ -118,11 +118,6 @@ export default {
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Logger',
-          to: '/management/logger'
-        },
-        {
-          icon: 'mdi-chart-bubble',
           title: 'Color Picker',
           to: '/games/colorpicker'
         },
@@ -130,11 +125,6 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Movements',
           to: '/games/movements'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Text',
-          to: '/games/updatetext'
         }
       ],
       miniVariant: false,

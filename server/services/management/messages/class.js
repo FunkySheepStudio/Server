@@ -23,7 +23,8 @@ exports.Messages = class Messages extends ServiceClass {
     const msg = {}
     msg.direction = 'outgoing'
     msg.sentAt = new Date().getTime()
-    msg.socket = from
+    msg.from = from
+    msg.socket = socket
     msg.data = data
 
     const to = this.app.connections.find(connection => connection._id === socket)

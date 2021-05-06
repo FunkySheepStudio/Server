@@ -1,7 +1,6 @@
 <template>
   <section>
     <Unity
-      ref="unity"
       path="/_games/"
       game="colorpicker"
     />

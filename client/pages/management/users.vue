@@ -4,7 +4,6 @@
       :items="users().data"
       :headers="headers"
     />
-    {{ users() }}
   </section>
 </template>
 <script>
@@ -34,10 +33,6 @@ export default {
         {
           text: 'Online',
           value: 'online'
-        },
-        {
-          text: 'Game',
-          value: 'game'
         }
       ]
     }

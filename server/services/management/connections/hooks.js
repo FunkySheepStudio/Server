@@ -8,7 +8,7 @@ async function clean (context) {
     }
   })
 
-  // If we gonna remove last connection for given user, remove the movements records
+  // If we gonna remove last connection for given user, remove the associated records
   await context.app.service('/api/management/connections').get(context.id)
     .then((connection) => {
       if (connection.user != null) {
@@ -19,7 +19,9 @@ async function clean (context) {
         })
           .then((connections) => {
             if (connections.total === 1) {
-              context.app.service('/api/games/movements').remove(connection.user)
+              context.app.service('/api/games/movements').remove(null, { query: { _id: connection.user } })
+              context.app.service('/api/games/colorpicker').remove(null, { query: { _id: connection.user } })
+              context.app.service('/api/management/users').patch(connection.user, { _id: connection.user, online: false })
             }
           })
       }

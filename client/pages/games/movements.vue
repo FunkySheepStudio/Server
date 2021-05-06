@@ -3,12 +3,12 @@
     <Unity
       path="/_games/"
       game="movements"
-      @loaded="loadColorPicker"
+      @loaded="load"
     />
     <Unity
       path="/_games/"
       game="movements"
-      @loaded="loadColorPicker"
+      @loaded="load"
     />
   </section>
 </template>
@@ -36,7 +36,7 @@ export default {
   },
   methods: {
     ...mapActions('movements', { findMovements: 'find', create: 'create', patch: 'patch' }),
-    loadColorPicker () {
+    load () {
       getUnityId()
         .then((id) => {
           this.unityId = id

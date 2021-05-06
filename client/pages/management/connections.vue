@@ -8,7 +8,6 @@
         {{ new Date(item.startedAt).toLocaleString() }}
       </template>
     </v-data-table>
-    {{ connections().data }}
   </section>
 </template>
 <script>

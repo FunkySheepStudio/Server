@@ -83,7 +83,11 @@ export default {
           value: '_id'
         },
         {
-          text: 'Socket',
+          text: 'From',
+          value: 'from'
+        },
+        {
+          text: 'To',
           value: 'socket'
         },
         {
