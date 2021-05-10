@@ -23,6 +23,7 @@
     "cross-env": "^7.0.3",
     "feathers-nedb": "^5.1.0",
     "feathers-vuex": "^3.15.0",
+    "funkysheep-ui": "git+https://github.com/FunkySheepStudio/funkysheep-ui.git",
     "idb": "^6.0.0",
     "nedb": "^1.8.0",
     "nodemon": "^2.0.7",

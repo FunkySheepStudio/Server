@@ -29,6 +29,7 @@
       fixed
       app
     >
+      <funkysheep-logo />
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn
         icon
