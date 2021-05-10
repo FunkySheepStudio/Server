@@ -29,7 +29,9 @@
       fixed
       app
     >
-      <funkysheep-logo />
+      <funkysheep-logo
+        src="/img/Logo-Head-Mini.png"
+      />
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-btn
         icon
