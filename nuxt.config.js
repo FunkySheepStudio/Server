@@ -8,8 +8,8 @@ module.exports = {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - Portfolio-Game-Server',
-    title: 'Portfolio-Game-Server',
+    titleTemplate: '%s - FunkySheep-Game-Server',
+    title: 'FunkySheep-Game-Server',
     htmlAttrs: {
       lang: 'en'
     },
