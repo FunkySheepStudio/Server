@@ -1,64 +1,46 @@
 <template>
-  <v-app dark>
-    <v-navigation-drawer
-      v-model="drawer"
-      :mini-variant="miniVariant"
-      :clipped="clipped"
-      fixed
-      app
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
+  <v-app>
     <v-app-bar
-      :clipped-left="clipped"
       fixed
       app
     >
       <funkysheep-logo
         src="/img/Logo-Head-Mini.png"
       />
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
-      <v-toolbar-title v-text="title" />
+      <v-toolbar-title
+        v-if="$vuetify.breakpoint.name != 'xs'"
+        v-text="title"
+      />
       <v-spacer />
-      <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
+      <funkysheep-menu-item
+        v-for="(menu, i) in menus"
+        :key="i"
+        :menu="menu"
+        :hidden="$vuetify.breakpoint.mobile"
+      />
+      <v-divider
+        class="mx-4"
+        vertical
+        :hidden="$vuetify.breakpoint.mobile"
+      />
+      <funkysheep-social
+        :hidden="$vuetify.breakpoint.mobile"
+      />
+      <div
+        :hidden="!$vuetify.breakpoint.mobile"
       >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
+        <v-btn
+          fab
+          elevation="0"
+          x-small
+          color="primary"
+          @click="mobileMenu = !mobileMenu"
+        >
+          <v-icon dark>
+            mdi-menu
+          </v-icon>
+        </v-btn>
+      </div>
     </v-app-bar>
     <v-main>
       <v-container>
@@ -66,27 +48,44 @@
       </v-container>
     </v-main>
     <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
+      v-model="mobileMenu"
+      right="true"
       temporary
       fixed
+      @mouseout="showMobileMenu = false"
     >
       <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
+        <funkysheep-menu-mobile-item
+          v-for="(menu, i) in menus"
+          :key="i"
+          :menu="menu"
+        />
+        <v-list-item>
+          <funkysheep-social />
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
     <v-footer
-      :absolute="!fixed"
-      app
+      color="primary"
+      height="auto"
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <v-layout
+        justify-center
+        align-center
+      >
+        <v-divider
+          class="mx-2"
+          vertical
+        />
+        Funky Sheep Studio &copy; {{ new Date().getFullYear() }}
+        <v-divider
+          class="mx-2"
+          vertical
+        />
+        <funkysheep-social
+          :hidden="$vuetify.breakpoint.mobile"
+        />
+      </v-layout>
     </v-footer>
   </v-app>
 </template>
@@ -95,45 +94,45 @@
 export default {
   data () {
     return {
-      clipped: false,
       drawer: false,
       fixed: false,
-      items: [
+      menus: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
-          to: '/'
+          title: 'Examples',
+          items: [
+            {
+              title: 'Color Picker',
+              to: '/games/colorpicker'
+            },
+            {
+              title: 'Movements',
+              to: '/games/movements'
+            }
+          ]
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Connections',
-          to: '/management/connections'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Users',
-          to: '/management/users'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Messages',
-          to: '/management/messages'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Color Picker',
-          to: '/games/colorpicker'
-        },
-        {
-          icon: 'mdi-chart-bubble',
-          title: 'Movements',
-          to: '/games/movements'
+          title: 'Management',
+          items: [
+            {
+              title: 'Connections',
+              to: '/management/connections'
+            },
+            {
+              title: 'Users',
+              to: '/management/users'
+            },
+            {
+              title: 'Messages',
+              to: '/management/messages'
+            }
+          ]
         }
       ],
       miniVariant: false,
-      right: true,
-      rightDrawer: false,
-      title: 'Vuetify.js'
+      mobileMenu: false,
+      title: 'Funky Sheep Studio Server'
     }
   }
 }
