@@ -1,25 +1,18 @@
 <template>
   <section>
-    <Unity
-      path="/_games/"
+    <funkysheep-unity
       game="movements"
-      @loaded="load"
     />
-    <Unity
-      path="/_games/"
+    <funkysheep-unity
       game="movements"
-      @loaded="load"
     />
   </section>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
 import { getUnityId } from '../../lib/unityDb'
-import Unity from '~/components/UnityLoader'
 export default {
-  components: {
-    Unity
-  },
+  components: {},
   data () {
     return {
       color: '',

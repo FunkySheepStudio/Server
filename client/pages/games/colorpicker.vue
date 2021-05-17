@@ -1,7 +1,6 @@
 <template>
   <section>
-    <Unity
-      path="/_games/"
+    <funkysheep-unity
       game="colorpicker"
     />
     <v-color-picker
@@ -14,11 +13,8 @@
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import Unity from '~/components/UnityLoader'
 export default {
-  components: {
-    Unity
-  },
+  components: {},
   data () {
     return {
       color: ''
