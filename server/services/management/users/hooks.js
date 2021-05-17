@@ -7,7 +7,7 @@ function setUserToConnection (context) {
       .then((connection) => {
         if (connection.user === '') {
           context.app.service('/api/management/connections').patch(connection._id, {
-            user: context.id
+            user: context.data.data._id
           })
         }
       })

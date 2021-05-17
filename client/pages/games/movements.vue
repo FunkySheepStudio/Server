@@ -1,12 +1,14 @@
 <template>
-  <section>
+  <v-container
+    class="d-md-flex justify-center"
+  >
     <funkysheep-unity
       game="movements"
     />
     <funkysheep-unity
       game="movements"
     />
-  </section>
+  </v-container>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'

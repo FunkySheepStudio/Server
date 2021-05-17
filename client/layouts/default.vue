@@ -49,7 +49,7 @@
     </v-main>
     <v-navigation-drawer
       v-model="mobileMenu"
-      right="true"
+      right
       temporary
       fixed
       @mouseout="showMobileMenu = false"

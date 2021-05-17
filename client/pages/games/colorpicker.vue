@@ -1,15 +1,18 @@
 <template>
-  <section>
-    <funkysheep-unity
-      game="colorpicker"
-    />
+  <v-container
+    class="d-md-flex justify-center"
+  >
     <v-color-picker
       v-model="color"
       dot-size="25"
       swatches-max-height="200"
       @update:color="updateColor"
     />
-  </section>
+    <funkysheep-unity
+      v-if="userId !== ''"
+      game="colorpicker"
+    />
+  </v-container>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
@@ -17,7 +20,8 @@ export default {
   components: {},
   data () {
     return {
-      color: ''
+      color: '',
+      userId: ''
     }
   },
   computed: {
