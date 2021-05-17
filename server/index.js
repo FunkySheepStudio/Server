@@ -32,12 +32,12 @@ exports.start = function start () {
   app.set('env', env)
   app.set('homePath', path.join(require('os').homedir(), '.funky-sheep-server', app.get('env')))
 
+  app.configure(certif)
   app.configure(services)
   app.configure(channels)
   app.configure(gameNetwork)
   app.hooks(require('./app.hooks'))
   app.configure(middleware)
-  app.configure(certif)
   //  app.configure(http)
 
   const host = app.get('host')
