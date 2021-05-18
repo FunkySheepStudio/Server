@@ -4,8 +4,8 @@ const selfsigned = require('selfsigned')
 module.exports = (app) => {
   let pems = {}
   // Find a local certificate file
-  const cert = '/etc/letsencrypt/live/www.funkysheep.net/fullchain.pem'
-  const key = '/etc/letsencrypt/live/www.funkysheep.net/privkey.pem'
+  const cert = '/etc/letsencrypt/live/admin.funkysheep.net/fullchain.pem'
+  const key = '/etc/letsencrypt/live/admin.funkysheep.net/privkey.pem'
 
   if (fs.existsSync(cert) && fs.existsSync(key)) {
     pems.cert = fs.readFileSync(cert)
