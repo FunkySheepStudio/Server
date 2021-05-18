@@ -6,7 +6,7 @@ module.exports = (app) => {
     key: app.certificate.private, cert: app.certificate.cert
   }
 
-  const server = https.createServer(credentials).listen(8081)
+  const server = https.createServer(credentials).listen(443)
 
   app.gameServer = new WebSocket.Server({
     server
