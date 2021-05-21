@@ -1,3 +1,5 @@
+<img src="https://www.funkysheep.net/img/Logo-Head-Mini.png" alt="drawing" width="200"/>
+
 # FunkySheep Game-Server
 
 ## Description
