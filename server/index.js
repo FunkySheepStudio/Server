@@ -1,7 +1,5 @@
 'use strict'
 const path = require('path')
-const https = require('https')
-const consola = require('consola')
 const feathers = require('@feathersjs/feathers')
 const socketio = require('@feathersjs/socketio')
 const express = require('@feathersjs/express')
@@ -10,9 +8,6 @@ const configuration = require('@feathersjs/configuration')
 const middleware = require('./middleware')
 const services = require('./services')
 const channels = require('./channels')
-const gameNetwork = require('./game.network')
-const certif = require('./certif')
-//  const http = require('./http')
 
 process.env.NODE_CONFIG_DIR = path.join(__dirname, 'config/')
 
@@ -32,28 +27,20 @@ exports.start = function start () {
   app.set('env', env)
   app.set('homePath', path.join(require('os').homedir(), '.funky-sheep-server', app.get('env')))
 
-  app.configure(certif)
   app.configure(services)
   app.configure(channels)
-  app.configure(gameNetwork)
   app.hooks(require('./app.hooks'))
   app.configure(middleware)
-  //  app.configure(http)
 
-  const host = app.get('host')
-  const port = app.get('port')
-  const credentials = {
-    key: app.certificate.private, cert: app.certificate.cert
+  app.host = app.get('host')
+
+  if (env === 'production') {
+    const https = require('./https')
+    app.configure(https)
+  } else {
+    const http = require('./http')
+    app.configure(http)
   }
-
-  const server = https.createServer(credentials, app).listen(port)
-
-  app.setup(server)
-
-  consola.ready({
-    message: `Feathers application started on ${host}:${port}`,
-    badge: true
-  })
 }
 
 this.start()
