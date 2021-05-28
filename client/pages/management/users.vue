@@ -3,7 +3,19 @@
     <v-data-table
       :items="users().data"
       :headers="headers"
-    />
+    >
+      <template #[`item.remove`]="{ item }">
+        <v-btn
+          @click="remove(item._id)"
+        >
+          <v-icon
+            color="red"
+          >
+            mdi-delete
+          </v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
   </section>
 </template>
 <script>
@@ -27,12 +39,12 @@ export default {
           value: 'nickname'
         },
         {
-          text: 'Request',
-          value: 'request'
-        },
-        {
           text: 'Online',
           value: 'online'
+        },
+        {
+          text: 'Remove',
+          value: 'remove'
         }
       ]
     }
@@ -41,7 +53,7 @@ export default {
     this.findUsers()
   },
   methods: {
-    ...mapActions('users', { findUsers: 'find' })
+    ...mapActions('users', { findUsers: 'find', remove: 'remove' })
   }
 }
 </script>
