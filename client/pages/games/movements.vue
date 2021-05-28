@@ -2,12 +2,18 @@
   <v-container
     class="d-md-flex justify-center"
   >
-    <funkysheep-unity
-      game="movements"
-    />
-    <funkysheep-unity
-      game="movements"
-    />
+    <v-card>
+      <v-card-title>Shake me!</v-card-title>
+      <funkysheep-unity
+        game="movements"
+      />
+    </v-card>
+    <v-card>
+      <v-card-title>Shake me!</v-card-title>
+      <funkysheep-unity
+        game="movements"
+      />
+    </v-card>
   </v-container>
 </template>
 <script>

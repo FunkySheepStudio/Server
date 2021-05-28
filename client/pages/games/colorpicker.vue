@@ -21,10 +21,20 @@
     <v-card>
       <v-card-title>Network messages</v-card-title>
       <v-data-table
-        :items="messages({ query: { direction: 'outgoing' } }).data.filter(record => record.data._id === userId)"
+        :items="messages(
+          { query: {
+            direction: 'outgoing',
+            $limit: 5,
+            $sort: {
+              sentAt: -1
+            }
+          }
+          }
+        ).data.filter(record => record.data._id === userId)"
         :headers="headersOutgoing"
         :sort-by="['sentAt']"
         :sort-desc="[true]"
+        hide-default-footer
       >
         <template #[`item.sentAt`]="{ item }">
           {{ new Date(item.sentAt).toLocaleString() }}
