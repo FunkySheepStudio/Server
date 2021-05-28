@@ -102,6 +102,10 @@ export default {
           title: 'Examples',
           items: [
             {
+              title: 'Nickname',
+              to: '/games/nickname'
+            },
+            {
               title: 'Color Picker',
               to: '/games/colorpicker'
             },
