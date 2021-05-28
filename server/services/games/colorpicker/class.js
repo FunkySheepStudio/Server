@@ -1,6 +1,6 @@
 const ServiceClass = require('../../service.class')
 
-exports.Colorpicker = class Movements extends ServiceClass {
+exports.Colorpicker = class Colorpicker extends ServiceClass {
   create (data, params) {
     // Discard a creation if already created
     return this.find({
