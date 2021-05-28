@@ -1,8 +1,26 @@
 <template>
   <section>
+    Web connections
     <v-data-table
-      :headers="headers"
-      :items="connections().data"
+      :headers="webHeaders"
+      :items="connections({
+        query: {
+          type: 'web'
+        }
+      }).data"
+    >
+      <template #[`item.startedAt`]="{ item }">
+        {{ new Date(item.startedAt).toLocaleString() }}
+      </template>
+    </v-data-table>
+    Game connections
+    <v-data-table
+      :headers="gameHeaders"
+      :items="connections({
+        query: {
+          type: 'game'
+        }
+      }).data"
     >
       <template #[`item.startedAt`]="{ item }">
         {{ new Date(item.startedAt).toLocaleString() }}
@@ -20,15 +38,23 @@ export default {
   },
   computed: {
     ...mapGetters('connections', { connections: 'find', get: 'get' }),
-    headers () {
+    webHeaders () {
       return [
         {
           text: 'Start date',
           value: 'startedAt'
         },
         {
-          text: 'ID',
-          value: '_id'
+          text: 'User',
+          value: 'user'
+        }
+      ]
+    },
+    gameHeaders () {
+      return [
+        {
+          text: 'Start date',
+          value: 'startedAt'
         },
         {
           text: 'User',

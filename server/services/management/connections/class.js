@@ -8,11 +8,11 @@ exports.Connections = class Connections extends ServiceClass {
     app.gameServer.on('connection', (socket, req) => {
       //  Create the socket
       this.app.connections.push(socket)
-      socket.startedAt = new Date().getTime()
 
       this.create({
-        startedAt: socket.startedAt,
-        user: ''
+        startedAt: Date.now(),
+        user: '',
+        type: 'game'
       })
         .then((data) => {
           socket._id = data._id

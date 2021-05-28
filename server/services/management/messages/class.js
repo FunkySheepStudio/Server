@@ -4,7 +4,8 @@ exports.Messages = class Messages extends ServiceClass {
   sendToUser (user, data, from) {
     this.app.service('/api/management/connections').find({
       query: {
-        user
+        user,
+        type: 'game'
       }
     })
       .then((connections) => {
