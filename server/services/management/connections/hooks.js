@@ -1,4 +1,28 @@
-// Clean all the records associated to a connection
+
+// Set user online
+function setOnline (context) {
+  if (context.data.user) {
+    context.app.service('/api/management/users').patch(context.data.user, {
+      online: true
+    })
+  }
+}
+
+// Set user offline
+function setOffline (context) {
+  context.app.service('/api/management/connections').find({
+    query: {
+      user: context.result.user
+    }
+  })
+    .then((connections) => {
+      if (connections.total === 0) {
+        context.app.service('/api/management/users').patch(context.result.user, {
+          online: false
+        })
+      }
+    })
+}
 
 async function clean (context) {
   //  Recmove messages associated to a connection
@@ -35,9 +59,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
-    update: [],
-    patch: [],
+    create: [setOnline],
+    update: [setOnline],
+    patch: [setOnline],
     remove: [clean]
   },
 
@@ -48,7 +72,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: []
+    remove: [setOffline]
   },
 
   error: {

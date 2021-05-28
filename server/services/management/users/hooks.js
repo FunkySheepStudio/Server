@@ -1,5 +1,4 @@
 const { hashPassword } = require('@feathersjs/authentication-local').hooks
-const setOnline = require('../../../hooks/setOnline')
 
 function setUserToConnection (context) {
   if (context.data.socket) {
@@ -21,9 +20,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [hashPassword('password'), setOnline(), setUserToConnection],
-    update: [hashPassword('password'), setOnline(), setUserToConnection],
-    patch: [hashPassword('password'), setOnline(), setUserToConnection],
+    create: [hashPassword('password'), setUserToConnection],
+    update: [hashPassword('password'), setUserToConnection],
+    patch: [hashPassword('password'), setUserToConnection],
     remove: []
   },
 
