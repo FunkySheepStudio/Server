@@ -2,16 +2,43 @@
   <v-container
     class="d-md-flex justify-center"
   >
-    <v-color-picker
-      v-model="color"
-      dot-size="25"
-      swatches-max-height="200"
-      @update:color="updateColor"
-    />
-    <funkysheep-unity
-      v-if="userId !== ''"
-      game="colorpicker"
-    />
+    <v-card>
+      <v-card-title>Pick a color</v-card-title>
+      <v-color-picker
+        v-model="color"
+        dot-size="25"
+        swatches-max-height="200"
+        @update:color="updateColor"
+      />
+    </v-card>
+    <v-card>
+      <v-card-title>See the changes</v-card-title>
+      <funkysheep-unity
+        v-if="userId !== ''"
+        game="colorpicker"
+      />
+    </v-card>
+    <v-card>
+      <v-card-title>Network messages</v-card-title>
+      <v-data-table
+        :items="messages({ query: { direction: 'outgoing' } }).data.filter(record => record.data._id === userId)"
+        :headers="headersOutgoing"
+        :sort-by="['sentAt']"
+        :sort-desc="[true]"
+      >
+        <template #[`item.sentAt`]="{ item }">
+          {{ new Date(item.sentAt).toLocaleString() }}
+        </template>
+        <template #[`item.data.color`]="{ item }">
+          <v-chip
+            :color="item.data.color"
+            dark
+          >
+            {{ item.data.color }}
+          </v-chip>
+        </template>
+      </v-data-table>
+    </v-card>
   </v-container>
 </template>
 <script>
@@ -25,7 +52,20 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('colorpicker', { colorpicker: 'find', get: 'get' })
+    ...mapGetters('colorpicker', { colorpicker: 'find', get: 'get' }),
+    ...mapGetters('messages', { messages: 'find' }),
+    headersOutgoing () {
+      return [
+        {
+          text: 'Send Date',
+          value: 'sentAt'
+        },
+        {
+          text: 'Color',
+          value: 'data.color'
+        }
+      ]
+    }
   },
   created () {},
   mounted () {
@@ -34,6 +74,7 @@ export default {
   },
   methods: {
     ...mapActions('colorpicker', { findColorpicker: 'find', create: 'create', patch: 'patch' }),
+    ...mapActions('messages', { findMessages: 'find' }),
     updateColor (color) {
       this.findColorpicker({
         query: {
