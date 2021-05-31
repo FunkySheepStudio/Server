@@ -1,9 +1,5 @@
 const cleanMessage = require('../../../hooks/cleanMessage')
-
-function getSocket (context) {
-  context.data.data.socket = context.data.socket
-  return context
-}
+const saveSocket = require('../../../hooks/saveSocket')
 
 function sendPosition (context) {
   const message = {
@@ -22,9 +18,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [getSocket, sendPosition, cleanMessage],
-    update: [getSocket, sendPosition, cleanMessage],
-    patch: [getSocket, sendPosition, cleanMessage],
+    create: [saveSocket, sendPosition, cleanMessage],
+    update: [saveSocket, sendPosition, cleanMessage],
+    patch: [saveSocket, sendPosition, cleanMessage],
     remove: []
   },
 
