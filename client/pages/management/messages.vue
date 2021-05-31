@@ -5,10 +5,10 @@
       :headers="headersIncoming"
     >
       <template #[`item.sentAt`]="{ item }">
-        {{ new Date(item.sentAt).toLocaleString() }}
+        {{ new Date(item.sentAt).toLocaleString() + " " + new Date(item.sentAt).getMilliseconds() + "ms" }}
       </template>
       <template #[`item.receiveAt`]="{ item }">
-        {{ new Date(item.receiveAt).toLocaleString() }}
+        {{ new Date(item.receiveAt).toLocaleString() + " " + new Date(item.receiveAt).getMilliseconds() + "ms" }}
       </template>
       <template #[`item.data`]="{ item }">
         {{ JSON.stringify(item.data) }}
@@ -19,10 +19,7 @@
       :headers="headersOutgoing"
     >
       <template #[`item.sentAt`]="{ item }">
-        {{ new Date(item.sentAt).toLocaleString() }}
-      </template>
-      <template #[`item.receiveAt`]="{ item }">
-        {{ new Date(item.receiveAt).toLocaleString() }}
+        {{ new Date(item.sentAt).toLocaleString() + " " + new Date(item.sentAt).getMilliseconds() + "ms" }}
       </template>
       <template #[`item.data`]="{ item }">
         {{ JSON.stringify(item.data) }}
