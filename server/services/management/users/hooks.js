@@ -16,14 +16,24 @@ function setUserToConnection (context) {
   return context
 }
 
+//  Send to updates to the connected user connections
 function sendUser (context) {
   const message = {
     data: {}
   }
-  Object.assign(message.data, context.data)
+
+  // If the data is coming from web or message
+  if (context.data && context.data.data) {
+    Object.assign(message.data, context.data.data)
+  } else {
+    Object.assign(message.data, context.data)
+  }
+
   message.data.service = '/' + context.path
   message.data.method = context.method
-  context.app.service('/api/management/messages').sendToUser(message.data._id, message.data)
+
+  context.app.service('/api/management/messages').sendToUser(message.data._id, message.data, message.data.socket)
+
   return context
 }
 
