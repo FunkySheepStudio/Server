@@ -89,11 +89,11 @@ export default {
         },
         {
           text: 'Service',
-          value: 'data.service'
+          value: 'service'
         },
         {
           text: 'Method',
-          value: 'data.method'
+          value: 'method'
         },
         {
           text: 'Data',

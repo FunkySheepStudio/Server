@@ -25,7 +25,6 @@
         :headers="headersIncoming"
         :sort-by="['sentAt']"
         :sort-desc="[true]"
-        items-per-page="5"
         hide-default-footer
       >
         <template #[`item.sentAt`]="{ item }">

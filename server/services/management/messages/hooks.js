@@ -1,6 +1,10 @@
 // Dispatch the incoming messages to the others services
 
 function dispatch (context) {
+  //  Only for incoming messages to avoid loops
+  if (context.data.direction == 'outgoing')
+    return context
+
   if (!context.data.params) {
     context.data.params = {}
   }
