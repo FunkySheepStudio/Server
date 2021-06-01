@@ -12,6 +12,7 @@ exports.Users = class Users extends ServiceClass {
   //  On user connection
   onConnect (authResult) {
     this.app.service('/api/management/connections').create({
+      _id: authResult.accessToken,
       startedAt: Date.now(),
       user: authResult.user._id,
       type: 'web'
