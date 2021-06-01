@@ -1,7 +1,7 @@
 const ServiceClass = require('../../service.class')
 
 exports.Messages = class Messages extends ServiceClass {
-  sendToUser (user, data, from) {
+  sendToUser (user, msg, from) {
     this.app.service('/api/management/connections').find({
       query: {
         user,
@@ -18,18 +18,16 @@ exports.Messages = class Messages extends ServiceClass {
         } */
 
         connections.data.forEach((connection) => {
-          this.sendToSocket(connection._id, data, from)
+          this.sendToSocket(connection._id, msg, from)
         })
       })
   }
 
-  sendToSocket (socket, data, from) {
-    const msg = {}
+  sendToSocket (socket, msg, from) {
     msg.direction = 'outgoing'
     msg.sentAt = new Date().getTime()
     msg.from = from
     msg.socket = socket
-    msg.data = data
 
     const to = this.app.connections.find(connection => connection._id === socket)
     to.send(JSON.stringify(msg))
