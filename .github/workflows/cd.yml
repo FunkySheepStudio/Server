@@ -16,5 +16,6 @@ jobs:
           echo "PASSWORD" | sudo -S service funkysheep-server stop
           cd /home/ubuntu/Server
           git pull
+          npm install
           npm run build
           echo "PASSWORD" | sudo -S service funkysheep-server start

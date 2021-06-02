@@ -15,5 +15,7 @@ module.exports = {
   ],
   ignorePatterns: ['**/client/static/*.js'],
   // add your custom rules here
-  rules: {}
+  rules: {
+    'nuxt/no-cjs-in-config': 'off'
+  }
 }
