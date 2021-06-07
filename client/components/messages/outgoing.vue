@@ -1,10 +1,10 @@
 <template>
   <section>
     <funkysheep-dashboard-item
-      name="Online"
-      color="red"
-      :total="users({query: {online: true } }).total"
-      :value="users({query: {online: true }}).total / users().total * 100"
+      name="Outgoing"
+      color="purple"
+      :total="messages().total"
+      :value="messages({query: {direction: 'outgoing' }}).total / messages().total * 100"
     />
   </section>
 </template>
@@ -17,13 +17,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('users', { users: 'find' })
+    ...mapGetters('messages', { messages: 'find' })
   },
   mounted () {
-    this.findUsers()
+    this.findMessages()
   },
   methods: {
-    ...mapActions('users', { findUsers: 'find' })
+    ...mapActions('messages', { findMessages: 'find' })
   }
 }
 </script>
