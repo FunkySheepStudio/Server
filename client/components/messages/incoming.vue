@@ -3,7 +3,7 @@
     <funkysheep-dashboard-item
       name="Incoming"
       color="blue"
-      :total="messages().total"
+      :total="messages({query: {direction: 'incoming' }}).total"
       :value="messages({query: {direction: 'incoming' }}).total / messages().total * 100"
     />
   </section>
