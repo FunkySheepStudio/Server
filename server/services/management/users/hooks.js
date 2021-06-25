@@ -5,7 +5,7 @@ const sendResult = require('../../../hooks/sendResult')
 function create (context) {
   context.data.online = false
 
-  if (context.data._id !== 'admin') {
+  if (context.data.login !== 'admin') {
     context.data.admin = false
     context.data.guest = true
     context.data.nickname = ''

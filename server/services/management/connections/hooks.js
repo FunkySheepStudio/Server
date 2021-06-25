@@ -1,7 +1,14 @@
+//  Set default creation values
+function create (context) {
+  if (context.data.user === undefined) {
+    context.data.user = ''
+  }
+  return context
+}
 
 // Set user online
 function setOnline (context) {
-  if (context.data.user) {
+  if (context.data.user !== '') {
     context.app.service('/api/management/users').patch(context.data.user, {
       online: true
     })
@@ -10,18 +17,20 @@ function setOnline (context) {
 
 // Set user offline
 function setOffline (context) {
-  context.app.service('/api/management/connections').find({
-    query: {
-      user: context.result.user
-    }
-  })
-    .then((connections) => {
-      if (connections.total === 0) {
-        context.app.service('/api/management/users').patch(context.result.user, {
-          online: false
-        })
+  if (context.result.user !== '') {
+    context.app.service('/api/management/connections').find({
+      query: {
+        user: context.result.user
       }
     })
+      .then((connections) => {
+        if (connections.total === 0) {
+          context.app.service('/api/management/users').patch(context.result.user, {
+            online: false
+          })
+        }
+      })
+  }
 }
 
 async function clean (context) {
@@ -35,7 +44,7 @@ async function clean (context) {
   // If we gonna remove last connection for given user, remove the associated records
   await context.app.service('/api/management/connections').get(context.id)
     .then((connection) => {
-      if (connection.user != null) {
+      if (connection.user !== '') {
         context.app.service('/api/management/connections').find({
           query: {
             user: connection.user
@@ -59,7 +68,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [setOnline],
+    create: [create, setOnline],
     update: [setOnline],
     patch: [setOnline],
     remove: [clean]

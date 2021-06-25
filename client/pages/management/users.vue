@@ -47,6 +47,10 @@ export default {
           value: '_id'
         },
         {
+          text: 'Login',
+          value: 'login'
+        },
+        {
           text: 'Nickname',
           value: 'nickname'
         },

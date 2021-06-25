@@ -12,13 +12,18 @@
         v-text="title"
       />
       <v-spacer />
-      <status />
       <funkysheep-menu-item
         v-for="(menu, i) in menus"
         :key="i"
         :menu="menu"
         :hidden="$vuetify.breakpoint.mobile"
       />
+      <v-divider
+        class="mx-4"
+        vertical
+        :hidden="$vuetify.breakpoint.mobile"
+      />
+      <funkysheep-login />
       <v-divider
         class="mx-4"
         vertical
@@ -92,11 +97,8 @@
 </template>
 
 <script>
-import status from '~/components/user/status'
 export default {
-  components: {
-    status
-  },
+  components: {},
   data () {
     return {
       drawer: false,

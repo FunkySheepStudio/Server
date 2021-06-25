@@ -7,34 +7,41 @@ exports.Users = class Users extends ServiceClass {
       .then((exist) => {
         if (!exist) {
           this.create({
-            _id: 'admin',
-            password: 'admin',
+            login: 'admin',
+            password: 'admin'
           })
         }
       })
-    
+
     this.patch(null, { online: false }, { query: { online: true } })
-    app.on('login', this.onConnect.bind(this))
+    app.on('connection', this.onConnect.bind(this))
+    app.on('login', this.onLogin.bind(this))
     app.on('disconnect', this.onDisconnect.bind(this))
 
     super.setup(app)
   }
 
-  //  On user connection
-  onConnect (authResult) {
+  // On connection
+  onConnect (connection) {
     this.app.service('/api/management/connections').create({
-      _id: authResult.accessToken,
+      _id: connection.headers['sec-websocket-key'],
       startedAt: Date.now(),
-      user: authResult.user._id,
       type: 'web'
     })
   }
 
+  //  On user connection
+  onLogin (authResult, { connection }) {
+    this.app.service('/api/management/connections').patch(
+      connection.headers['sec-websocket-key'],
+      {
+        user: authResult.user._id
+      }
+    )
+  }
+
   //  On user diconnection
   onDisconnect (connection) {
-    console.log(connection)
-    if (connection.authentication && connection.authentication.accessToken) {
-      this.app.service('/api/management/connections').remove(connection.authentication.accessToken)
-    }
+    this.app.service('/api/management/connections').remove(connection.headers['sec-websocket-key'])
   }
 }
