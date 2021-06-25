@@ -1,7 +1,8 @@
-import feathersClient, {
+import {
+  feathersClient,
   makeServicePlugin,
   BaseModel
-} from '../apis/local'
+} from '../../plugins/feather'
 
 const serviceName = '/api/management/users'
 
@@ -13,7 +14,8 @@ class Users extends BaseModel {
 const servicePlugin = makeServicePlugin({
   Model: Users,
   service: feathersClient.service(serviceName),
-  serviceName
+  serviceName,
+  idField: '_id'
 })
 
 // Optionally add service-level hooks, here:

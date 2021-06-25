@@ -1,4 +1,5 @@
 import feathers from '@feathersjs/feathers'
+import auth from '@feathersjs/authentication-client'
 import socketio from '@feathersjs/socketio-client'
 import io from 'socket.io-client'
 import feathersVuex from 'feathers-vuex'
@@ -7,8 +8,10 @@ import feathersVuex from 'feathers-vuex'
 const socket = io(process.env.localApiURL, { transports: ['websocket'] })
 const feathersClient = feathers()
   .configure(socketio(socket))
-
-export default feathersClient
+  .configure(auth({
+    storage: window.localStorage,
+    path: '/api/management/authentication'
+  }))
 
 // Setup feathers-vuex
 const {
@@ -21,7 +24,7 @@ const {
 } = feathersVuex(feathersClient)
 
 //  Set user and password in the browser if they does not exist
-if (!localStorage.getItem('user')) {
+/*  if (!localStorage.getItem('user')) {
   localStorage.setItem('user', Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15))
 }
 const user = localStorage.getItem('user')
@@ -40,14 +43,17 @@ socket.on('connect', (socket) => {
 
   feathersClient.service('/api/management/users').create(credentials)
     .then(() => {
-      feathersClient.service('/api/authentication').create({ ...credentials, strategy: 'local' })
+      //  feathersClient.authenticate({ ...credentials, strategy: 'local' })
+      //  feathersClient.service('/api/management/authentication').create({ ...credentials, strategy: 'local' })
     })
     .catch(() => {
-      feathersClient.service('/api/authentication').create({ ...credentials, strategy: 'local' })
+      //  feathersClient.authenticate({ ...credentials, strategy: 'local' })
+      //  feathersClient.service('/api/management/authentication').create({ ...credentials, strategy: 'local' })
     })
-})
+})  */
 
 export {
+  feathersClient,
   makeAuthPlugin,
   makeServicePlugin,
   BaseModel,

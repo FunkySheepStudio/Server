@@ -12,6 +12,7 @@
         v-text="title"
       />
       <v-spacer />
+      <status />
       <funkysheep-menu-item
         v-for="(menu, i) in menus"
         :key="i"
@@ -91,7 +92,11 @@
 </template>
 
 <script>
+import status from '~/components/user/status'
 export default {
+  components: {
+    status
+  },
   data () {
     return {
       drawer: false,

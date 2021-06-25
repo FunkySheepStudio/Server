@@ -10,10 +10,10 @@ module.exports = (app) => {
   authentication.register('jwt', new JWTStrategy())
   authentication.register('local', new LocalStrategy())
 
-  app.use('/api/authentication', authentication)
+  app.use('/api/management/authentication', authentication)
   //  app.configure(expressOauth())
 
-  const service = app.service('/api/authentication')
+  const service = app.service('/api/management/authentication')
 
   service.hooks(hooks)
 }

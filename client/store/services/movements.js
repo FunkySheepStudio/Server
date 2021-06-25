@@ -1,7 +1,8 @@
-import feathersClient, {
+import {
+  feathersClient,
   makeServicePlugin,
   BaseModel
-} from '../apis/local'
+} from '../../plugins/feather'
 
 const serviceName = '/api/games/movements'
 

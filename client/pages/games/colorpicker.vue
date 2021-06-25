@@ -30,7 +30,10 @@
             }
           }
           }
-        ).data.filter(record => record.data._id === userId)"
+        ).data.filter(record => record.data)
+          .filter(record => record.data.color)
+          .filter(record => record.data._id === userId)
+        "
         :headers="headersOutgoing"
         :sort-by="['sentAt']"
         :sort-desc="[true]"

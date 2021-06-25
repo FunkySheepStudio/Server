@@ -1,0 +1,23 @@
+name: cd
+on: [push, pull_request]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          echo "PASSWORD" | sudo -S service funkysheep-server stop
+          cd /home/ubuntu
+          rm -rf Server
+          git clone https://github.com/FunkySheepStudio/Server.git
+          cd Server
+          npm install
+          npm run build
+          echo "PASSWORD" | sudo -S service funkysheep-server start

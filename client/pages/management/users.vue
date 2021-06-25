@@ -4,6 +4,18 @@
       :items="users().data"
       :headers="headers"
     >
+      <template #[`item.guest`]="{ item }">
+        <v-checkbox
+          :input-value="item.guest"
+          @change="guest(item._id, !item.guest)"
+        />
+      </template>
+      <template #[`item.admin`]="{ item }">
+        <v-checkbox
+          :input-value="item.admin"
+          @change="admin(item._id, !item.admin)"
+        />
+      </template>
       <template #[`item.remove`]="{ item }">
         <v-btn
           @click="remove(item._id)"
@@ -43,6 +55,14 @@ export default {
           value: 'online'
         },
         {
+          text: 'Guest',
+          value: 'guest'
+        },
+        {
+          text: 'Admin',
+          value: 'admin'
+        },
+        {
           text: 'Remove',
           value: 'remove'
         }
@@ -53,7 +73,19 @@ export default {
     this.findUsers()
   },
   methods: {
-    ...mapActions('users', { findUsers: 'find', remove: 'remove' })
+    ...mapActions('users', { findUsers: 'find', patch: 'patch', remove: 'remove' }),
+    admin (_id, admin) {
+      this.patch([
+        _id,
+        { admin }
+      ])
+    },
+    guest (_id, admin) {
+      this.patch([
+        _id,
+        { admin }
+      ])
+    }
   }
 }
 </script>
