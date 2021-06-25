@@ -41,10 +41,6 @@ export default {
     webHeaders () {
       return [
         {
-          text: 'Id',
-          value: '_id'
-        },
-        {
           text: 'Start date',
           value: 'startedAt'
         },
