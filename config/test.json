@@ -21,7 +21,7 @@
     },
     "local": {
       "entity": "user",
-      "usernameField": "_id",
+      "usernameField": "login",
       "passwordField": "password"
     }
   }

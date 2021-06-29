@@ -4,12 +4,6 @@
       :items="users().data"
       :headers="headers"
     >
-      <template #[`item.guest`]="{ item }">
-        <v-checkbox
-          :input-value="item.guest"
-          @change="guest(item._id, !item.guest)"
-        />
-      </template>
       <template #[`item.admin`]="{ item }">
         <v-checkbox
           :input-value="item.admin"
@@ -57,10 +51,6 @@ export default {
         {
           text: 'Online',
           value: 'online'
-        },
-        {
-          text: 'Guest',
-          value: 'guest'
         },
         {
           text: 'Admin',

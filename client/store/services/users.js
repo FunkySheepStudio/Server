@@ -14,8 +14,7 @@ class Users extends BaseModel {
 const servicePlugin = makeServicePlugin({
   Model: Users,
   service: feathersClient.service(serviceName),
-  serviceName,
-  idField: '_id'
+  serviceName
 })
 
 // Optionally add service-level hooks, here:

@@ -7,12 +7,12 @@ function create (context) {
 
   if (context.data.login !== 'admin') {
     context.data.admin = false
-    context.data.guest = true
     context.data.nickname = ''
   } else {
     context.data.admin = true
-    context.data.guest = false
     context.data.nickname = 'Administrator'
+    context.data.login = 'admin'
+    context.data.password = 'admin'
   }
 
   return context
@@ -38,7 +38,7 @@ module.exports = {
     all: [],
     find: [setUserToConnection],
     get: [setUserToConnection],
-    create: [hashPassword('password'), create, setUserToConnection],
+    create: [create, hashPassword('password'), setUserToConnection],
     update: [hashPassword('password'), setUserToConnection],
     patch: [hashPassword('password'), setUserToConnection],
     remove: []
