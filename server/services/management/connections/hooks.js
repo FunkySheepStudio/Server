@@ -6,31 +6,36 @@ function create (context) {
   return context
 }
 
-// Set user online
-function setOnline (context) {
-  if (context.data.user !== '') {
+//  Set the user online field depending on the numbers of connections left
+async function userOnline(context) {
+  //  If the record exist
+  if (context.id) {
+    await context.service.get(context.id) // We get the current record
+      .then(async (connection) => {
+        if (connection.user != '') {
+          await context.service.find({
+            query: {
+              user: connection.user
+            }
+          })
+            .then((oldUserConnections) => {
+              if (oldUserConnections.total === 1) { // If just on connection left, we set user to offline
+                context.app.service('/api/management/users').patch(connection.user, {
+                  online: false
+                })
+              }
+            })
+        }
+      })
+  }
+  
+  if (context.data && context.data.user !== '') { // If no old user but new one still
     context.app.service('/api/management/users').patch(context.data.user, {
       online: true
     })
   }
-}
 
-// Set user offline
-function setOffline (context) {
-  if (context.result.user !== '') {
-    context.app.service('/api/management/connections').find({
-      query: {
-        user: context.result.user
-      }
-    })
-      .then((connections) => {
-        if (connections.total === 0) {
-          context.app.service('/api/management/users').patch(context.result.user, {
-            online: false
-          })
-        }
-      })
-  }
+  return context
 }
 
 async function clean (context) {
@@ -68,9 +73,9 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [create, setOnline],
-    update: [setOnline],
-    patch: [setOnline],
+    create: [create, userOnline],
+    update: [userOnline],
+    patch: [userOnline],
     remove: [clean]
   },
 
@@ -81,7 +86,7 @@ module.exports = {
     create: [],
     update: [],
     patch: [],
-    remove: [setOffline]
+    remove: []
   },
 
   error: {

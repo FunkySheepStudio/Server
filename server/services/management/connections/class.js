@@ -33,5 +33,23 @@ exports.Connections = class Connections extends ServiceClass {
         this.app.connections = this.app.connections.filter(s => s !== socket)
       })
     })
+
+    //  Bind web connections events
+    app.on('connection', this.onConnect.bind(this))
+    app.on('disconnect', this.onDisconnect.bind(this))
+  }
+
+  // On web connection
+  onConnect (connection) {
+    this.app.service('/api/management/connections').create({
+      _id: connection.headers['sec-websocket-key'],
+      startedAt: Date.now(),
+      type: 'web'
+    })
+  }
+
+  //  On user diconnection
+  onDisconnect (connection) {
+    this.app.service('/api/management/connections').remove(connection.headers['sec-websocket-key'])
   }
 }
