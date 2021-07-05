@@ -107,7 +107,7 @@ export default {
     }
   },
   created () {
-    this.userId = localStorage.getItem('user')
+    this.userId = localStorage.getItem('_id')
   },
   mounted () {
     this.findUsers()
