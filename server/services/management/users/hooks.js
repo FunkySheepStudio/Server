@@ -2,20 +2,32 @@ const { hashPassword } = require('@feathersjs/authentication-local').hooks
 const sendResult = require('../../../hooks/sendResult')
 
 //  Set default creation values
-function create (context) {
-  context.data.online = false
+async function create (context) {
+  // Check if admin exist
+  return await context.service.find({
+    query: {
+      login: context.data.login
+    }
+  })
+    .then((admins) => {
+      if (admins.total === 1) {
+        throw new Error(context.data.login + ' user already exist');
+      } else {
+        context.data.online = false
 
-  if (context.data.login !== 'admin') {
-    context.data.admin = false
-    context.data.nickname = ''
-  } else {
-    context.data.admin = true
-    context.data.nickname = 'Administrator'
-    context.data.login = 'admin'
-    context.data.password = 'admin'
-  }
+        if (context.data.login !== 'admin') {
+          context.data.admin = false
+          context.data.nickname = ''
+        } else {
+          context.data.admin = true
+          context.data.nickname = 'Administrator'
+          context.data.login = 'admin'
+          context.data.password = 'admin'
+        }
 
-  return context
+      return context
+      }
+    })
 }
 
 function setUserToConnection (context) {
