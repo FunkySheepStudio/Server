@@ -82,7 +82,7 @@ export default {
   },
   created () {},
   mounted () {
-    this.userId = localStorage.getItem('user')
+    this.userId = localStorage.getItem('_id')
     this.findColorpicker()
   },
   methods: {
