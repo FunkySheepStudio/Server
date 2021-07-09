@@ -29,14 +29,7 @@ exports.Users = class Users extends ServiceClass {
   }
 
   //  On user login
-  onLogin (authResult, { connection }) {
-    this.app.service('/api/management/connections').patch(
-      connection.headers['sec-websocket-key'],
-      {
-        user: authResult.user._id
-      }
-    )
-  }
+  onLogin (authResult, { connection }) {}
 
   //  On user logout
   onLogout (authResult, { connection }) {

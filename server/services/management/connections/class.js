@@ -11,27 +11,26 @@ exports.Connections = class Connections extends ServiceClass {
 
       this.create({
         startedAt: Date.now(),
-        user: '',
         type: 'game'
       })
         .then((data) => {
           socket._id = data._id
+
+          socket.on('message', (data) => {
+            //  Create the message
+            const msg = JSON.parse(Buffer.from(data).toString())
+            msg.direction = 'incoming'
+            msg.receiveAt = new Date().getTime()
+            msg.socket = socket._id
+            this.app.service('/api/management/messages').create(msg)
+          })
+    
+          socket.on('close', () => {
+            // Delete the socket
+            this.remove(socket._id)
+            this.app.connections = this.app.connections.filter(s => s !== socket)
+          })
         })
-
-      socket.on('message', (data) => {
-        //  Create the message
-        const msg = JSON.parse(Buffer.from(data).toString())
-        msg.direction = 'incoming'
-        msg.receiveAt = new Date().getTime()
-        msg.socket = socket._id
-        this.app.service('/api/management/messages').create(msg)
-      })
-
-      socket.on('close', () => {
-        // Delete the socket
-        this.remove(socket._id)
-        this.app.connections = this.app.connections.filter(s => s !== socket)
-      })
     })
 
     //  Bind web connections events

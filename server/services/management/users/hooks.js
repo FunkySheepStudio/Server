@@ -30,29 +30,14 @@ async function create (context) {
     })
 }
 
-function setUserToConnection (context) {
-  if (context.params.socket) {
-    context.app.service('/api/management/connections').get(context.params.socket)
-      .then((connection) => {
-        if (connection.user === '') {
-          context.app.service('/api/management/connections').patch(connection._id, {
-            user: context.id
-          })
-        }
-      })
-  }
-
-  return context
-}
-
 module.exports = {
   before: {
     all: [],
-    find: [setUserToConnection],
-    get: [setUserToConnection],
-    create: [create, hashPassword('password'), setUserToConnection],
-    update: [hashPassword('password'), setUserToConnection],
-    patch: [hashPassword('password'), setUserToConnection],
+    find: [],
+    get: [],
+    create: [create, hashPassword('password')],
+    update: [hashPassword('password')],
+    patch: [hashPassword('password')],
     remove: []
   },
 

@@ -38,7 +38,6 @@
         createUnityInstance(canvas, config, (progress) => {
           //  progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          unityInstance.SendMessage('User', 'setUserId', localStorage.getItem('_id'))
           unityInstance.SendMessage('User', 'setUserToken', localStorage.getItem('feathers-jwt'))
         }).catch((message) => {
           alert(message);

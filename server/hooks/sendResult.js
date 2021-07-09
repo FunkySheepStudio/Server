@@ -19,8 +19,10 @@ module.exports = (context) => {
         }
         break
       default:
-        message.data = context.data
-        context.app.service('/api/management/messages').sendToUser(context.result._id, message, context.params.socket)
+        if (context.params.ack && context.params.socket) {
+          message.data = context.result
+          context.app.service('/api/management/messages').sendToSocket(context.params.socket, message, context.params.socket)
+        }
         break
     }
   }

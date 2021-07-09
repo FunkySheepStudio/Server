@@ -57,8 +57,6 @@ async function clean (context) {
         })
           .then((connections) => {
             if (connections.total === 1) {
-              context.app.service('/api/games/movements').remove(null, { query: { _id: connection.user } })
-              context.app.service('/api/games/colorpicker').remove(null, { query: { _id: connection.user } })
               context.app.service('/api/management/users').patch(connection.user, { _id: connection.user, online: false })
             }
           })
