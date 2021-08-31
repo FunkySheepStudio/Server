@@ -1,5 +1,17 @@
 const sendResult = require('../../../hooks/sendResult')
 
+function sendMovement (context) {
+  const message = {
+    method: context.method,
+    service: '/' + context.path
+  }
+
+  if (context.result) {
+    message.data = context.data
+    context.app.service('/api/management/messages').sendToUser(context.result._id, message, context.params.socket)
+  }
+}
+
 module.exports = {
   before: {
     all: [],
@@ -13,11 +25,11 @@ module.exports = {
 
   after: {
     all: [],
-    find: [sendResult],
-    get: [sendResult],
-    create: [sendResult],
-    update: [sendResult],
-    patch: [sendResult],
+    find: [],
+    get: [],
+    create: [sendMovement],
+    update: [],
+    patch: [sendMovement],
     remove: []
   },
 

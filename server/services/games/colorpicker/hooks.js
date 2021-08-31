@@ -1,16 +1,3 @@
-async function colorChanged (context) {
-  return await context.service.get(context.id)
-    .then((record) => {
-      if (record.color !== context.data.color) {
-        console.log("changed")
-        return context
-      } else {
-        console.log("not changed")
-        context.result = null
-      }
-    })
-}
-
 function sendColor (context) {
   const message = {
     method: context.method,
@@ -30,8 +17,8 @@ module.exports = {
     find: [],
     get: [],
     create: [],
-    update: [colorChanged],
-    patch: [colorChanged],
+    update: [],
+    patch: [],
     remove: []
   },
 

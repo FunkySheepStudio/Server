@@ -60,6 +60,7 @@ export default {
   components: {},
   data () {
     return {
+      lastColor: '',
       color: '',
       userId: ''
     }
@@ -100,8 +101,9 @@ export default {
               _id: this.userId,
               color: color.hex
             })
-          } else {
+          } else if (this.lastColor !== this.color) {
             this.patch([this.userId, { _id: this.userId, color: this.color }])
+            this.lastColor = this.color
           }
         })
     }
