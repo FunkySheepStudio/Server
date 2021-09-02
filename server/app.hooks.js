@@ -1,4 +1,4 @@
-//  const updated = require('./hooks/updated')
+const noNullID = require('./hooks/noNullID')
 
 // Global feathers Hooks
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [],
+    create: [noNullID],
     update: [],
     patch: [],
     remove: []
