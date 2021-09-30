@@ -17,13 +17,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('messages', { messages: 'find' })
+    ...mapGetters('/api/system/messages', { messages: 'find' })
   },
   mounted () {
     this.findMessages()
   },
   methods: {
-    ...mapActions('messages', { findMessages: 'find' })
+    ...mapActions('/api/system/messages', { findMessages: 'find' })
   }
 }
 </script>

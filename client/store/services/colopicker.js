@@ -7,14 +7,15 @@ import {
 const serviceName = '/api/games/colorpicker'
 
 // Extend the base class
-class ColorPicker extends BaseModel {
+class Model extends BaseModel {
   static modelName = serviceName
 }
 
 const servicePlugin = makeServicePlugin({
-  Model: ColorPicker,
+  Model,
   service: feathersClient.service(serviceName),
-  serviceName
+  serviceName,
+  namespace: serviceName
 })
 
 // Optionally add service-level hooks, here:

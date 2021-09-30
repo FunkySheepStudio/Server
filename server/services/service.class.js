@@ -1,9 +1,16 @@
 const { Service } = require('feathers-nedb')
+const errors = require('@feathersjs/errors')
 
 module.exports = class ServiceClass extends Service {
   constructor (options, app) {
     super(options, app)
-    this.name = this.constructor.name.toLowerCase()
+    this._id = options._id
+
+    if (this._id !== "/api/system/services") {
+      app.service('/api/system/services').register(this)
+    } else {
+      this.register(this)
+    }
   }
 
   setup (app) {
@@ -19,6 +26,17 @@ module.exports = class ServiceClass extends Service {
   // Service stopped event
   stopped () {
     this.emit('stopped', this.name)
+  }
+
+  create(data, params) {
+    return this.exist(data._id)
+      .then(exist => {
+          if (!exist) {
+            return super.create(data, params)
+          } else {
+            return errors.GeneralError('The record with _id ${data._id} allready exist')
+          }
+      })
   }
 
   //  Check if the record exist

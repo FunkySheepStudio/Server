@@ -4,17 +4,18 @@ import {
   BaseModel
 } from '../../plugins/feather'
 
-const serviceName = '/api/management/connections'
+const serviceName = '/api/system/connections'
 
 // Extend the base class
-class Connections extends BaseModel {
+class Model extends BaseModel {
   static modelName = serviceName
 }
 
 const servicePlugin = makeServicePlugin({
-  Model: Connections,
+  Model,
   service: feathersClient.service(serviceName),
-  serviceName
+  serviceName,
+  namespace: serviceName
 })
 
 // Optionally add service-level hooks, here:

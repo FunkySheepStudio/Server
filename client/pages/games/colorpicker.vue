@@ -66,8 +66,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('colorpicker', { colorpicker: 'find', get: 'get' }),
-    ...mapGetters('messages', { messages: 'find' }),
+    ...mapGetters('/api/games/colorpicker', { colorpicker: 'find', get: 'get' }),
+    ...mapGetters('/api/system/messages', { messages: 'find' }),
     headersOutgoing () {
       return [
         {
@@ -87,8 +87,8 @@ export default {
     this.findColorpicker()
   },
   methods: {
-    ...mapActions('colorpicker', { findColorpicker: 'find', create: 'create', patch: 'patch' }),
-    ...mapActions('messages', { findMessages: 'find' }),
+    ...mapActions('/api/games/colorpicker', { findColorpicker: 'find', create: 'create', patch: 'patch' }),
+    ...mapActions('/api/system/messages', { findMessages: 'find' }),
     updateColor (color) {
       this.findColorpicker({
         query: {

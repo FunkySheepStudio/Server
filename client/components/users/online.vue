@@ -17,13 +17,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('users', { users: 'find' })
+    ...mapGetters('/api/system/users', { users: 'find' })
   },
   mounted () {
     this.findUsers()
   },
   methods: {
-    ...mapActions('users', { findUsers: 'find' })
+    ...mapActions('/api/system/users', { findUsers: 'find' })
   }
 }
 </script>

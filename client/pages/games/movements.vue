@@ -29,14 +29,14 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('movements', { movements: 'find', get: 'get' })
+    ...mapGetters('/api/games/movements', { movements: 'find', get: 'get' })
   },
   async created () {},
   mounted () {
     this.findMovements()
   },
   methods: {
-    ...mapActions('movements', { findMovements: 'find', create: 'create', patch: 'patch' }),
+    ...mapActions('/api/games/movements', { findMovements: 'find', create: 'create', patch: 'patch' }),
     load () {
       getUnityId()
         .then((id) => {

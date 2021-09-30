@@ -6,7 +6,7 @@ function sendColor (context) {
 
   if (context.result) {
     message.data = context.data
-    context.app.service('/api/management/messages').sendToUser(context.result._id, message, context.params.socket)
+    context.app.service('/api/system/messages').sendToUser(context.result._id, message, context.params.socket)
   }
 }
 

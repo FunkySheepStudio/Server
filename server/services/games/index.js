@@ -1,5 +1,5 @@
-const movements = require('./movements/service')
-const colorpicker = require('./colorpicker/service')
+const movements = require('./movements')
+const colorpicker = require('./colorpicker')
 
 module.exports = function (app) {
   app.configure(movements)

@@ -1,6 +1,6 @@
 const ServiceClass = require('../../service.class')
 
-exports.Movements = class Movements extends ServiceClass {
+exports.Service = class Service extends ServiceClass {
   patch(id, data, params) {
     if (id !== null) {
       return this.find({

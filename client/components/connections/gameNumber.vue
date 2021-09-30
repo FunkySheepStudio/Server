@@ -17,13 +17,13 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('connections', { connections: 'find' })
+    ...mapGetters('/api/system/connections', { connections: 'find' })
   },
   mounted () {
     this.findConnections()
   },
   methods: {
-    ...mapActions('connections', { findConnections: 'find' })
+    ...mapActions('/api/system/connections', { findConnections: 'find' })
   }
 }
 </script>

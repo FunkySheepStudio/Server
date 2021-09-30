@@ -9,19 +9,19 @@ module.exports = (context) => {
       case 'find':
         if (context.params.socket) {
           message.data = context.result
-          context.app.service('/api/management/messages').sendToSocket(context.params.socket, message, context.params.socket)
+          context.app.service('/api/system/messages').sendToSocket(context.params.socket, message, context.params.socket)
         }
         break
       case 'get':
         if (context.params.socket) {
           message.data = context.result
-          context.app.service('/api/management/messages').sendToSocket(context.params.socket, message, context.params.socket)
+          context.app.service('/api/system/messages').sendToSocket(context.params.socket, message, context.params.socket)
         }
         break
       default:
         if (context.params.ack && context.params.socket) {
           message.data = context.result
-          context.app.service('/api/management/messages').sendToSocket(context.params.socket, message, context.params.socket)
+          context.app.service('/api/system/messages').sendToSocket(context.params.socket, message, context.params.socket)
         }
         break
     }

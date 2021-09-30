@@ -56,8 +56,8 @@ export default {
     }
   },
   computed: {
-    ...mapGetters('users', { users: 'find', getUser: 'get' }),
-    ...mapGetters('messages', { messages: 'find' }),
+    ...mapGetters('/api/system/users', { users: 'find', getUser: 'get' }),
+    ...mapGetters('/api/system/messages', { messages: 'find' }),
     nickname: {
       get () {
         const user = this.getUser(this.userId)
@@ -114,8 +114,8 @@ export default {
     this.findMessages()
   },
   methods: {
-    ...mapActions('users', { findUsers: 'find', patch: 'patch' }),
-    ...mapActions('messages', { findMessages: 'find' }),
+    ...mapActions('/api/system/users', { findUsers: 'find', patch: 'patch' }),
+    ...mapActions('/api/system/messages', { findMessages: 'find' }),
     nicknameExist (nickname) {
       return this.findUsers({
         query: {

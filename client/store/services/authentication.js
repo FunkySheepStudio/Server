@@ -3,7 +3,7 @@ import {
 } from '../../plugins/feather'
 
 const authPlugin = makeAuthPlugin({
-  userService: 'users'
+  userService: '/api/system/users'
 })
 
 export default authPlugin

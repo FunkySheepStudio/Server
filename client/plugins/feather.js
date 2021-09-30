@@ -10,7 +10,7 @@ const feathersClient = feathers()
   .configure(socketio(socket))
   .configure(auth({
     storage: window.localStorage,
-    path: '/api/management/authentication'
+    path: '/api/system/authentication'
   }))
 
 // Setup feathers-vuex
@@ -41,14 +41,14 @@ socket.on('connect', (socket) => {
     password
   }
 
-  feathersClient.service('/api/management/users').create(credentials)
+  feathersClient.service('/api/system/users').create(credentials)
     .then(() => {
       //  feathersClient.authenticate({ ...credentials, strategy: 'local' })
-      //  feathersClient.service('/api/management/authentication').create({ ...credentials, strategy: 'local' })
+      //  feathersClient.service('/api/system/authentication').create({ ...credentials, strategy: 'local' })
     })
     .catch(() => {
       //  feathersClient.authenticate({ ...credentials, strategy: 'local' })
-      //  feathersClient.service('/api/management/authentication').create({ ...credentials, strategy: 'local' })
+      //  feathersClient.service('/api/system/authentication').create({ ...credentials, strategy: 'local' })
     })
 })  */
 
