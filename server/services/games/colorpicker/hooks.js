@@ -1,3 +1,5 @@
+const sendResult = require('../../../hooks/sendResult')
+
 function sendColor (context) {
   const message = {
     method: context.method,
@@ -25,7 +27,7 @@ module.exports = {
   after: {
     all: [],
     find: [],
-    get: [],
+    get: [sendResult],
     create: [sendColor],
     update: [sendColor],
     patch: [sendColor],

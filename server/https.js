@@ -10,13 +10,13 @@ module.exports = (app) => {
     key: app.certificate.private, cert: app.certificate.cert
   }
 
-  const gameServer = https.createServer(credentials).listen(443)
+  const gameServer = https.createServer(credentials).listen(443, '0.0.0.0')
 
   app.gameServer = new WebSocket.Server({
     server: gameServer
   })
 
-  const server = https.createServer(credentials, app).listen(app.get('port'))
+  const server = https.createServer(credentials, app).listen(app.get('port'), '0.0.0.0')
   app.setup(server)
 
   consola.ready({
