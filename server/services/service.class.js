@@ -34,7 +34,7 @@ module.exports = class ServiceClass extends Service {
           if (!exist) {
             return super.create(data, params)
           } else {
-            return errors.GeneralError('The record with _id ${data._id} allready exist')
+            return super.patch(data._id, data, params)
           }
       })
   }
