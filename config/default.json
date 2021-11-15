@@ -3,8 +3,8 @@
   "port": 8080,
   "logLevel": 0,
   "paginate": {
-    "default": 1000,
-    "max": 50000
+    "default": 10,
+    "max": 50
   },
   "authentication": {
     "entity": "user",
