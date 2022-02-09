@@ -14,7 +14,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           echo "PASSWORD" | sudo -S service funkysheep-server stop
-          cd /home/ubuntu
+          cd /var/www
           rm -rf Server
           git clone https://github.com/FunkySheepStudio/Server.git
           cd Server
