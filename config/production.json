@@ -18,7 +18,7 @@
       "header": {
         "typ": "access"
       },
-      "audience": "https://www.funkysheep.net",
+      "audience": "https://admin.funkysheep.net",
       "issuer": "feathers",
       "algorithm": "HS256",
       "expiresIn": "1d"
