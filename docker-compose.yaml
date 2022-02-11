@@ -2,6 +2,7 @@ version: "3"
 
 services:
   admin-server:
+    container_name: funkysheep-admin
     build:
       context: https://github.com/FunkySheepStudio/Server.git
       dockerfile: DockerFile

@@ -1,1 +1,2 @@
 FROM node:16
+RUN npm i https://github.com/FunkySheepStudio/Server
