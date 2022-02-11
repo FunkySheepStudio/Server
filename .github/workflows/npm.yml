@@ -1,4 +1,4 @@
-name: Publish to npm
+name: npm
  
 # Controls when the action will run.
 # In this case, I'm saying on each release event when it's specifically a new release publish, the types: [published] is required here,
@@ -18,7 +18,7 @@ jobs:
        registry-url: https://registry.npmjs.org/
  
    # Command to install the package dependencies
-   - run: yarn install
+   - run: npm ci
    
    # Publish to npm
    - run: npm publish --access public
