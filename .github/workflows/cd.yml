@@ -13,19 +13,19 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          echo ---- Update apt ---
-          sudo apt-get update
-          echo ---- Upgrade apt ---
-          sudo apt-get upgrade
-          echo ---- Install GIT ---
-          sudo apt-get install git
-          echo ---- Remove the last repo ---
-          sudo rm -rf /var/www/admin.funkysheep.net
-          echo ---- Cloning the repository ---
-          sudo git clone https://github.com/FunkySheepStudio/Server.git /var/www/admin.funkysheep.net
-          echo ---- Get the docker config file ---
-          wget https://raw.githubusercontent.com/FunkySheepStudio/Server/master/docker-compose.yaml -O docker-compose.yaml
-          echo ---- Adding the docker compose image ----
-          sudo docker-compose up -d --build
-          echo ---- Remove the docker compose file ----
-          sudo rm docker-compose.yaml
+#          echo ---- Update apt ---
+#          sudo apt-get update
+#          echo ---- Upgrade apt ---
+#          sudo apt-get upgrade
+#          echo ---- Install GIT ---
+#          sudo apt-get install git
+#          echo ---- Remove the last repo ---
+#          sudo rm -rf /var/www/admin.funkysheep.net
+#          echo ---- Cloning the repository ---
+#          sudo git clone https://github.com/FunkySheepStudio/Server.git /var/www/admin.funkysheep.net
+#          echo ---- Get the docker config file ---
+#          wget https://raw.githubusercontent.com/FunkySheepStudio/Server/master/docker-compose.yaml -O docker-compose.yaml
+#          echo ---- Adding the docker compose image ----
+#          sudo docker-compose up -d --build
+#          echo ---- Remove the docker compose file ----
+#          sudo rm docker-compose.yaml
