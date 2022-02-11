@@ -1,4 +1,4 @@
-FROM node:latest
+FROM node:16.14
 WORKDIR /var/www/
 COPY . .
 RUN npm install
