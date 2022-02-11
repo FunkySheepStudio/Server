@@ -1,4 +1,4 @@
-name: cd
+name: install
 on: [push, pull_request]
 jobs:
   build:
@@ -13,11 +13,9 @@ jobs:
         password: ${{ secrets.PASSWORD }}
         port: ${{ secrets.PORT }}
         script: |
-          echo "PASSWORD" | sudo -S service funkysheep-server stop
-          cd /var/www
-          rm -rf Server
-          git clone https://github.com/FunkySheepStudio/Server.git
-          cd Server
-          npm install
-          npm run build
-          echo "PASSWORD" | sudo -S service funkysheep-server start
+          echo ---- Get the docker config file ---
+          wget https://raw.githubusercontent.com/FunkySheepStudio/Server/master/docker-compose.yaml -O docker-compose.yaml
+          echo ---- Adding the docker compose image ----
+          sudo docker-compose up -d --build
+          echo ---- Remove the docker compose file ----
+          sudo rm docker-compose.yaml
