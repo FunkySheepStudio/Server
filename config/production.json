@@ -1,6 +1,7 @@
 {
   "host": "0.0.0.0",
-  "port": 5001,
+  "wsport": 5001,
+  "port": 5000,
   "logLevel": 0,
   "paginate": {
     "default": 10,

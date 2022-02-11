@@ -3,7 +3,7 @@ const WebSocket = require('ws')
 const consola = require('consola')
 
 module.exports = (app) => {
-  const gameServer = http.createServer().listen(443, '0.0.0.0')
+  const gameServer = http.createServer().listen(app.get('wsport'), '0.0.0.0')
 
   app.gameServer = new WebSocket.Server({
     server: gameServer
