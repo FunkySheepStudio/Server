@@ -39,7 +39,7 @@ module.exports = {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
-    'funkysheep-ui/nuxt'
+    'net.funkysheep.server.ui/nuxt'
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
