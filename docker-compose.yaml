@@ -1,0 +1,10 @@
+version: "3"
+
+services:
+  admin-server:
+    build:
+      context: https://github.com/FunkySheepStudio/Server.git
+      dockerfile: DockerFile
+    ports:
+      - "5000"
+      - "5001"
