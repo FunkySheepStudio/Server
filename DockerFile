@@ -1,2 +1,6 @@
 FROM node:latest
-RUN npm i git+https://github.com/FunkySheepStudio/Server.git#main
+ADD /var/www/admin.funkysheep.net /www
+WORKDIR /www
+RUN npm install
+RUN npm run build
+RUN npm start
