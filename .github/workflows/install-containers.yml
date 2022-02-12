@@ -1,0 +1,26 @@
+name: install-containers
+on:
+  workflow_run:
+      workflows: ["admin-pre"]
+      branches: [master, main]
+      types: 
+        - completed
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        password: ${{ secrets.PASSWORD }}
+        port: ${{ secrets.PORT }}
+        script: |
+          echo ---- Get the docker config file ---
+          wget https://raw.githubusercontent.com/FunkySheepStudio/Infra/master/docker-compose.yaml -O docker-compose.yaml
+          echo ---- Setting the docker infrastructure ----
+          sudo docker-compose up -d --build
+          echo ---- Remove the docker compose file ----
+          sudo rm docker-compose.yaml
