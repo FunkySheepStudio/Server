@@ -10,19 +10,24 @@ function create (context) {
 async function userOnline(context) {
   //  If the record exist
   if (context.id) {
-    await context.service.get(context.id) // We get the current record
+    await context.service.get(context.id, {socket: 'system'}) // We get the current record
       .then(async (connection) => {
         if (connection.user != '') {
           await context.service.find({
             query: {
               user: connection.user
-            }
+            },
+            socket: 'system'
           })
             .then((oldUserConnections) => {
               if (oldUserConnections.total === 1) { // If just on connection left, we set user to offline
                 context.app.service('/api/system/users').patch(connection.user, {
                   online: false
-                })
+                },
+                {
+                  socket: 'system'
+                }
+                )
               }
             })
         }
@@ -32,6 +37,9 @@ async function userOnline(context) {
   if (context.data && context.data.user !== '') { // If no old user but new one still
     context.app.service('/api/system/users').patch(context.data.user, {
       online: true
+    },
+    {
+      socket: 'system'
     })
   }
 
@@ -43,21 +51,29 @@ async function clean (context) {
   await context.app.service('/api/system/messages').remove(null, {
     query: {
       socket: context.id
-    }
+    },
+    socket: 'system'
   })
 
   // If we gonna remove last connection for given user, remove the associated records
-  await context.app.service('/api/system/connections').get(context.id)
+  await context.app.service('/api/system/connections').get(context.id, {socket: 'system'})
     .then((connection) => {
       if (connection.user !== '') {
         context.app.service('/api/system/connections').find({
           query: {
             user: connection.user
-          }
+          },
+          socket: 'system'
         })
           .then((connections) => {
             if (connections.total === 1) {
-              context.app.service('/api/system/users').patch(connection.user, { _id: connection.user, online: false })
+              context.app.service('/api/system/users').patch(
+                connection.user,
+                { _id: connection.user, online: false },
+                {
+                  socket: 'system'
+                }
+              )
             }
           })
       }

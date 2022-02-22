@@ -1,5 +1,6 @@
 <template>
   <v-container
+    v-if="$store.state.auth.user"
     class="
     d-flex
     flex-column

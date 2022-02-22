@@ -6,7 +6,7 @@ async function create (context) {
   // Check if admin exist
   return await context.service.find({
     query: {
-      login: context.data.login
+      login: 'admin'
     }
   })
     .then((admins) => {
@@ -44,6 +44,20 @@ function sendUserBack (context) {
   }
 }
 
+function Filter (context) {
+  if (!context.params.socket)
+  {
+    context.result.data = context.result.data.map((item) => {
+      return {
+        login: item.login
+      }
+    })
+    //throw new Error('Not logged in')
+  } else {
+    return context
+  }
+}
+
 module.exports = {
   before: {
     all: [],
@@ -57,7 +71,7 @@ module.exports = {
 
   after: {
     all: [],
-    find: [sendResult],
+    find: [Filter, sendResult],
     get: [sendResult],
     create: [sendResult],
     update: [sendResult, sendUserBack],

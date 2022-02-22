@@ -6,21 +6,36 @@ exports.Service = class Service extends ServiceClass {
     this.find({
       query: {
         login: 'admin'
+      },
+      socket: 'system'
+    })
+    .then((record) => {
+      if (record.total === 0) {
+        this.create({
+          login: 'admin',
+          password: 'admin'
+        },
+        {
+          socket: 'system'
+        }
+        )
+        .catch((err) => {
+          console.log(err)
+        })
       }
     })
-      .then((record) => {
-        if (record.total === 0) {
-          this.create({
-            login: 'admin',
-            password: 'admin'
-          })
-        }
+    .catch((err) => {
+      this.app.log(err, true)
+    })
+
+    this.patch(null, { online: false },
+      {
+        query: { online: true },
+        socket: 'system'
       })
       .catch((err) => {
-        this.app.log(err, true)
+        console.log(err)
       })
-
-    this.patch(null, { online: false }, { query: { online: true } })
     
     app.on('login', this.onLogin.bind(this))
     app.on('logout', this.onLogout.bind(this))
@@ -37,7 +52,8 @@ exports.Service = class Service extends ServiceClass {
       connection.headers['sec-websocket-key'],
       {
         user: ''
-      }
+      },
+      {socket: 'system'}
     )
   }
 }

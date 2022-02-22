@@ -1,9 +1,15 @@
 const noNullID = require('./hooks/noNullID')
+const setSocket = require('./hooks/setSocket')
+const setUser = require('./hooks/setUser')
+
+function error(context) {
+  console.error(`Error in '${context.path}' service method '${context.method}'`, context.error.stack);
+}
 
 // Global feathers Hooks
 module.exports = {
   before: {
-    all: [],
+    all: [setSocket, setUser],
     find: [],
     get: [],
     create: [noNullID],
@@ -23,7 +29,7 @@ module.exports = {
   },
 
   error: {
-    all: [],
+    all: [error],
     find: [],
     get: [],
     create: [],

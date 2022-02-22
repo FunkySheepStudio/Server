@@ -9,7 +9,8 @@ exports.Service = class Service extends ServiceClass {
         _id: {
           $ne: from
         }
-      }
+      },
+      socket: 'system'
     })
       .then((connections) => {
         //  If from is defined, we don't return the message to the sender
@@ -30,9 +31,12 @@ exports.Service = class Service extends ServiceClass {
     msg.socket = socket
 
     const to = this.app.connections.find(connection => connection._id === socket)
-    to.send(JSON.stringify(msg))
+    if (to)
+    {
+      to.send(JSON.stringify(msg))
+    }
 
     //  Save the message
-    this.app.service('/api/system/messages').create(msg)
+    this.app.service('/api/system/messages').create(msg, {socket: 'system'})
   }
 }

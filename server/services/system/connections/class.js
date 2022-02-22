@@ -12,7 +12,11 @@ exports.Service = class Service extends ServiceClass {
       this.create({
         startedAt: Date.now(),
         type: 'game'
-      })
+      },
+      {
+        socket: 'system'
+      }
+      )
         .then((data) => {
           socket._id = data._id
 
@@ -22,12 +26,12 @@ exports.Service = class Service extends ServiceClass {
             msg.direction = 'incoming'
             msg.receiveAt = new Date().getTime()
             msg.socket = socket._id
-            this.app.service('/api/system/messages').create(msg)
+            this.app.service('/api/system/messages').create(msg, {socket: 'system'})
           })
     
           socket.on('close', () => {
             // Delete the socket
-            this.remove(socket._id)
+            this.remove(socket._id, {socket: 'system'})
             this.app.connections = this.app.connections.filter(s => s !== socket)
           })
         })
@@ -44,11 +48,11 @@ exports.Service = class Service extends ServiceClass {
       _id: connection.headers['sec-websocket-key'],
       startedAt: Date.now(),
       type: 'web'
-    })
+    }, {socket: 'system'})
   }
 
   //  On user diconnection
   onDisconnect (connection) {
-    this.app.service('/api/system/connections').remove(connection.headers['sec-websocket-key'])
+    this.app.service('/api/system/connections').remove(connection.headers['sec-websocket-key'], {socket: 'system'})
   }
 }

@@ -23,7 +23,7 @@
         vertical
         :hidden="$vuetify.breakpoint.mobile"
       />
-      <funkysheep-login />
+      <funkysheep-user-login />
       <v-divider
         class="mx-4"
         vertical

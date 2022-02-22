@@ -29,7 +29,7 @@
     "nedb": "^1.8.0",
     "net.funkysheep.server.ui": "^1.0.0",
     "nodemon": "^2.0.15",
-    "nuxt": "^2.2.0",
+    "nuxt": "^2.15.8",
     "selfsigned": "^2.0.0"
   },
   "devDependencies": {

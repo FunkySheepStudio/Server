@@ -44,7 +44,8 @@ module.exports = class ServiceClass extends Service {
     return this.find({
       query: {
         _id
-      }
+      },
+      socket: 'system'
     })
       .then((record) => {
         if (record.total === 0) {
