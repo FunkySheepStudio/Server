@@ -9,7 +9,7 @@ function error(context) {
 // Global feathers Hooks
 module.exports = {
   before: {
-    all: [setSocket, setUser],
+    all: [],
     find: [],
     get: [],
     create: [noNullID],

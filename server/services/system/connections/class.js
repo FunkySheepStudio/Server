@@ -5,18 +5,15 @@ exports.Service = class Service extends ServiceClass {
     this.app = app
     this.app.connections = []
 
+    // On game connection
     app.gameServer.on('connection', (socket, req) => {
       //  Create the socket
       this.app.connections.push(socket)
-
       this.create({
         startedAt: Date.now(),
-        type: 'game'
-      },
-      {
-        socket: 'system'
-      }
-      )
+        type: 'game',
+        user: ''
+      })
         .then((data) => {
           socket._id = data._id
 
@@ -29,9 +26,10 @@ exports.Service = class Service extends ServiceClass {
             this.app.service('/api/system/messages').create(msg, {socket: 'system'})
           })
     
+          // On game disconnection
           socket.on('close', () => {
             // Delete the socket
-            this.remove(socket._id, {socket: 'system'})
+            this.remove(socket._id)
             this.app.connections = this.app.connections.filter(s => s !== socket)
           })
         })
@@ -47,12 +45,41 @@ exports.Service = class Service extends ServiceClass {
     this.app.service('/api/system/connections').create({
       _id: connection.headers['sec-websocket-key'],
       startedAt: Date.now(),
-      type: 'web'
-    }, {socket: 'system'})
+      type: 'web',
+      user: ''
+    })
   }
 
-  //  On user diconnection
+  //  On web diconnection
   onDisconnect (connection) {
-    this.app.service('/api/system/connections').remove(connection.headers['sec-websocket-key'], {socket: 'system'})
+    this.app.service('/api/system/connections').remove(
+      connection.headers['sec-websocket-key']
+    )
+  }
+
+  setUser(connectionId, user)
+  {
+    return this.patch(
+      connectionId,
+      {
+        user
+      }
+    )
+    .catch(() => {
+      console.log("Unable to set user on connection")
+    })
+  }
+
+  unSetUser(connectionId)
+  {
+    return this.patch(
+      connectionId,
+      {
+        user: ""
+      }
+    )
+    .catch(() => {
+      console.log("Unable to unset user on connection")
+    })
   }
 }

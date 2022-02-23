@@ -1,10 +1,4 @@
-//  Set default creation values
-function create (context) {
-  if (context.data.user === undefined) {
-    context.data.user = ''
-  }
-  return context
-}
+const { disallow } = require('feathers-hooks-common');
 
 //  Set the user online field depending on the numbers of connections left
 async function userOnline(context) {
@@ -29,6 +23,9 @@ async function userOnline(context) {
                 }
                 )
               }
+            })
+            .catch((err) => {
+              console.log(err)
             })
         }
       })
@@ -87,10 +84,10 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [create, userOnline],
-    update: [userOnline],
-    patch: [userOnline],
-    remove: [clean]
+    create: [disallow('external')],
+    update: [disallow('external')],
+    patch: [disallow('external')],
+    remove: [disallow('external')]
   },
 
   after: {

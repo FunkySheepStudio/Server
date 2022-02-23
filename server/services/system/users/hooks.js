@@ -63,7 +63,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [create, hashPassword('password')],
+    create: [hashPassword('password')],
     update: [hashPassword('password')],
     patch: [hashPassword('password')],
     remove: []
@@ -71,11 +71,11 @@ module.exports = {
 
   after: {
     all: [],
-    find: [Filter, sendResult],
-    get: [sendResult],
-    create: [sendResult],
-    update: [sendResult, sendUserBack],
-    patch: [sendResult, sendUserBack],
+    find: [],
+    get: [],
+    create: [],
+    update: [],
+    patch: [],
     remove: []
   },
 

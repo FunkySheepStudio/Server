@@ -23,11 +23,12 @@
     "@vue/composition-api": "^0.6.7",
     "core-js": "^3.21.0",
     "cross-env": "^7.0.3",
+    "feathers-hooks-common": "^5.0.6",
     "feathers-nedb": "^6.0.0",
     "feathers-vuex": "^3.16.0",
     "idb": "^7.0.0",
     "nedb": "^1.8.0",
-    "net.funkysheep.server.ui": "^1.0.0",
+    "net.funkysheep.server.ui": "^1.0.1",
     "nodemon": "^2.0.15",
     "nuxt": "^2.15.8",
     "selfsigned": "^2.0.0"
