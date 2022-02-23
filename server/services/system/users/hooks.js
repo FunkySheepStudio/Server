@@ -72,10 +72,10 @@ module.exports = {
   after: {
     all: [],
     find: [],
-    get: [],
+    get: [sendResult],
     create: [],
     update: [],
-    patch: [],
+    patch: [sendUserBack],
     remove: []
   },
 

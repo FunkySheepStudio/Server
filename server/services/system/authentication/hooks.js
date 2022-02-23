@@ -31,7 +31,7 @@ module.exports = {
     all: [],
     find: [],
     get: [],
-    create: [connectionSetUser],
+    create: [sendResult, connectionSetUser],
     update: [],
     patch: [],
     remove: [connectionUnSetUser]

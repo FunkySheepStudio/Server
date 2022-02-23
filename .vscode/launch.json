@@ -26,6 +26,13 @@
         "${workspaceFolder}/**",
         "!**/node_modules/**"
       ]
+    },
+    {
+      "name": "Attach to node",
+      "type": "node",
+      "request": "attach",
+      "restart": true,
+      "port": 9228
     }
   ],
   "compounds": [
