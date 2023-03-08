@@ -5,15 +5,45 @@ export default {
   },
   data() {
     return {
-      token: ''
+      url: '',
+      time: 0
     }
   },
   mounted() {
-    this.auth()
+    const self = this;
+
+    this.SendNewKey()
+    function IncreaseTime() {
+      self.time += 1
+      console.log(self.time)
+      if (self.time >= 5)
+      {
+        self.SendNewKey()
+        self.time = 0
+      }
+      setTimeout(IncreaseTime, 1000);
+    }
+    IncreaseTime()
   },
   methods: {
-    auth: function() {
-      this.token = localStorage.getItem('user-auth-device-token');
+    SendNewKey: function() {
+      const array = new Uint32Array(1);
+      window.crypto.getRandomValues(array);
+      let url = new URL(`${window.location.protocol}//${window.location.host}`)
+      url.searchParams.append('service', 'user-auth');
+      url.searchParams.append('token', array.toString());
+
+      this.url = url.toString()
+
+      var message = {
+          service: 'user-auth',
+          function: 'AddAuthKey',
+          data: {
+            key: array.toString()
+          }
+        }
+
+      socket.send(JSON.stringify(message))
     }
   }
 }
@@ -23,7 +53,9 @@ export default {
   <div>
     <v-card>
       <v-card-title> Create new user</v-card-title>
-      <qrcode data="http://www.cci.fr" />
+      <qrcode :qrData="url" />
+      {{ url }}
+      {{ time }}
     </v-card>
     <v-card>
       <v-card-title> Add new device</v-card-title>

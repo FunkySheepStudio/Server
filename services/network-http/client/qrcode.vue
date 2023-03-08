@@ -1,10 +1,15 @@
 <script lang="ts">
 export default {
   props: {
-    data: String,
+    qrData: String,
   },
   data() {
     return {
+    }
+  },
+  watch: { 
+    qrData: function(newVal, oldVal) { // watch it
+      this.generate()
     }
   },
   mounted() {
@@ -14,23 +19,27 @@ export default {
 
     let scriptIsReady = false;
     const self = this;
-    let checkInterval = setInterval(function () {
-      if (QRCode) {
+
+    (function me() {
+      if (typeof QRCode !== 'undefined') {
         scriptIsReady = true;
-        clearInterval(checkInterval);
+        const contenedorQR = document.getElementById('contenedorQR');
+        self.QR = new QRCode(contenedorQR);
         self.generate()
       }
-      return scriptIsReady;
-    }, 500);
+
+      if (!scriptIsReady)
+      {
+        setTimeout(me, 100);
+      }
+    })();
   },
   methods: {
     generate: function() {
-      const contenedorQR = document.getElementById('contenedorQR');
-      const formulario = document.getElementById('formulario');
-      const word = document.getElementById('word');
-      const QR = new QRCode(contenedorQR);
-      const container = document.getElementById("container");
-      QR.makeCode(this.data)
+      if (this.qrData && this.QR )
+      {
+        this.QR.makeCode(this.qrData)
+      }
     }
   }
 }

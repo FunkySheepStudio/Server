@@ -1,5 +1,6 @@
 const fs = require('fs');
 var path = require('path');
+var url = require('url');
 
 module.exports = class Services {
     config = require('./config.json')
@@ -48,5 +49,14 @@ module.exports = class Services {
           res.end(data);
         }
       })
+    }
+
+    DispatchMessage(message)
+    {
+      let service = this.Get(message.service)
+      if (service)
+      {
+        service.ExecuteMessage(message)
+      }
     }
 };

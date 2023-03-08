@@ -9,4 +9,13 @@ module.exports = class Services {
     {
         console.log('Starting: ' + this.name)
     }
+
+    ExecuteMessage(message)
+    {
+      var functionConfig = this.config.functions?.find(item => item === message.function)
+      if (functionConfig)
+      {
+        this[message.function](message)
+      }
+    }
 }

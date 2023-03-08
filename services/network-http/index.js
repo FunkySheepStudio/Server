@@ -7,6 +7,7 @@ module.exports = class NetworkHttp extends Service
     {
         super(name, services)
         this.server = http.createServer((req, res) => {
+            this.AddRequestParams(req, res)
             this.services.LoadClientFile(req, res)
         })
 
@@ -17,5 +18,26 @@ module.exports = class NetworkHttp extends Service
     {
         super.Start()
         this.server.listen(this.config.port);
+    }
+
+    AddRequestParams(req)
+    {
+      let q=req.url.split('?'),result={};
+        if(q.length>=2){
+            q[1].split('&').forEach((item)=>{
+                 try {
+                   result[item.split('=')[0]]=item.split('=')[1];
+                 } catch (e) {
+                   result[item.split('=')[0]]='';
+                 }
+            })
+        }
+      
+      if (q.length > 1)
+      {
+        req.url = q[0]
+      }
+
+      req.params=result;
     }
 }

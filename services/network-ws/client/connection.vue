@@ -17,17 +17,25 @@ export default {
       socket = new WebSocket(`${wsProtocol}//${window.location.host}`)
 
       socket.onopen = () => {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+
+        var message = {
+          service: 'network-ws',
+          function: 'Register',
+          data: {
+            wsKey: array.toString()
+          }
+        }
+
+        socket.send(JSON.stringify(message))
         this.connected = true
       }
 
       socket.onclose = () => {
         this.connected = false
-        setTimeout(this.connect, 1000);
+        setTimeout(this.connect(), 5000);
       }
-
-      socket.onerror = () => {
-        socket.close();
-      };
     }
   }
 }
