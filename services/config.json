@@ -2,6 +2,7 @@
     "name": "Services",
     "services": [
         "network-http",
-        "network-ws"
+        "network-ws",
+        "user-auth"
     ]
 }
