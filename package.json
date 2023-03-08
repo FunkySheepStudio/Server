@@ -1,6 +1,6 @@
 {
   "name": "net.funkysheep.server",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=development nodemon --watch server server/index.js",
     "dev-debug": "cross-env NODE_ENV=development nodemon --watch server --inspect=0.0.0.0:9228 --trace-warnings server/index.js",
