@@ -1,11 +1,13 @@
 <script lang="ts">
 export default {
   components: {
-    'qrcode': Vue.defineAsyncComponent( () => loadModule('/network-http/qrcode.vue', options) )
+    'qrcode': Vue.defineAsyncComponent( () => loadModule('/network-http/qrcode.vue', options) ),
+    'pincode': Vue.defineAsyncComponent( () => loadModule('/user-auth/pincode.vue', options) )
   },
   data() {
     return {
       authenticated: false,
+      user: '',
       url: '',
       time: 0
     }
@@ -20,18 +22,17 @@ export default {
       this.SendNewKey(urlParams.get('token'))
     } else {
       const self = this;
-
-    this.SendNewKey()
+      this.SendNewKey()
       function IncreaseTime() {
-        self.time += 1
-        if (self.time >= 20)
-        {
-          self.SendNewKey()
-          self.time = 0
+          self.time += 1
+          if (self.time >= 20)
+          {
+            self.SendNewKey()
+            self.time = 0
+          }
+          setTimeout(IncreaseTime, 1000);
         }
-        setTimeout(IncreaseTime, 1000);
-      }
-      IncreaseTime()
+        IncreaseTime()
     }
   },
   methods: {
@@ -40,11 +41,16 @@ export default {
       {
         if (message.function === 'GetUser')
         {
-          this.authenticated = true
+          this.user = message.data.user
+          localStorage.setItem('user', message.data.user)
+          localStorage.setItem('device', message.data.device)
         }
       }
     },
     SendNewKey: function(token) {
+      if (this.user !== '')
+        return
+        
       if (!token)
       {
         const array = new Uint32Array(1);
@@ -74,12 +80,15 @@ export default {
 
 <template>
   <div v-if="!authenticated" class="d-flex justify-center">
-      <v-card>
+      <v-card
+        v-if="user == ''"
+        class="text-center"
+      >
         <v-card-title>Use your mobile to scan</v-card-title>
         <qrcode :qrData="url" />
-        {{ url }}
       </v-card>
-    </div>
+      <pincode v-else/>
+  </div>
 </template>
 
 <style>

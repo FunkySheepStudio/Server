@@ -3,6 +3,8 @@
     "services": [
         "network-http",
         "network-ws",
+        "users",
+        "user-devices",
         "user-auth"
     ]
 }

@@ -1,4 +1,5 @@
 const Service = require('../service');
+const crypto = require('crypto');
 
 module.exports = class UserAuth extends Service
 {
@@ -17,6 +18,36 @@ module.exports = class UserAuth extends Service
         return item.ws !== ws
       })
     });
+  }
+
+  CheckPinCode(message)
+  {
+    var user = this.services.Get("users").users.find((item) => {
+      return item.id === message.data.user
+    })
+
+    var device = this.services.Get("user-devices").devices.find((item) => {
+      return (item.id === message.data.device && item.user === message.data.user)
+    })
+
+    let pinMessage = {
+      service: "user-auth",
+      function: ""
+    }
+
+    if (!user.pin)
+    {
+      user.pin = message.data.pin
+      pinMessage.function = "ConfirmPin"
+    } else if (user.pin === message.data.pin && device) {
+      pinMessage.function = "PinOk"
+    } else {
+      pinMessage.function = "PinNOk"
+    }
+
+    console.log(user)
+    console.log(pinMessage)
+    this.services.Get("network-ws").Send(message.ws, pinMessage)
   }
 
   AddAuthKey(message)
@@ -40,17 +71,32 @@ module.exports = class UserAuth extends Service
 
     } else {
 
+      let userId = crypto.randomUUID()
+      this.services.Get("users").users.push({
+        id: userId
+      })
+
       let userMessage = {
         service: "user-auth",
         function: "GetUser",
         data: {
-          user: 'test'
+          user: userId,
+          device: crypto.randomUUID()
         }
       }
-      console.log(token.ws)
-      console.log(message.ws)
       this.services.Get("network-ws").Send(token.ws, userMessage)
+      this.services.Get("user-devices").devices.push({
+        id: userMessage.data.device,
+        user: userId
+      })
+
+      userMessage.device = crypto.randomUUID()
       this.services.Get("network-ws").Send(message.ws, userMessage)
+
+      this.services.Get("user-devices").devices.push({
+        id: userMessage.data.device,
+        user: userId
+      })
     }
   }
 }
