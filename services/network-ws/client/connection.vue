@@ -5,7 +5,7 @@ export default {
   },
   data() {
     return {
-      connected: false
+      connected: true
     }
   },
   mounted() {
@@ -43,7 +43,11 @@ export default {
 
 <template>
   <div>
-    <v-alert v-if="!connected" text="Connection server lost"></v-alert>
+    <v-alert v-if="!connected"
+      color="primary"
+      class="justify-center"
+      text="Connection server lost">
+    </v-alert>
     <user-auth-authentication v-else />
   </div>
 </template>

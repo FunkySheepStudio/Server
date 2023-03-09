@@ -62,7 +62,12 @@ export default {
 </script>
 
 <template>
-  <qrcode :qrData="url" />
+  <div class="d-flex justify-center">
+      <v-card>
+        <v-card-title>Use your mobile to scan</v-card-title>
+        <qrcode :qrData="url" />
+      </v-card>
+    </div>
 </template>
 
 <style>

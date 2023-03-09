@@ -14,8 +14,4 @@ export default {
 </template>
 
 <style>
-.greeting {
-  color: red;
-  font-weight: bold;
-}
 </style>

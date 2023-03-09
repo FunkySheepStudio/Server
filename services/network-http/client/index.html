@@ -16,13 +16,8 @@
 </head>
 
 <body>
-    <div class="container body-content">
-        <div id="app" v-cloak>
-            <v-app>
-                <spa-toolbar :title="msg"></spa-toolbar>
-                <router-view></router-view>
-            </v-app>
-        </div>
+    <div id="app">
+        <v-app />
     </div>
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
@@ -51,8 +46,32 @@
         }
     
         const { loadModule } = window['vue3-sfc-loader'];
+
+        const myCustomLightTheme = {
+          dark: true,
+          colors: {
+            background: '#000000',
+            surface: '#FFFFFF',
+            primary: '#F57800',
+            'primary-darken-1': '#F57800',
+            secondary: '#07E6AE',
+            'secondary-darken-1': '#07E6AE',
+            error: '#B00020',
+            info: '#2196F3',
+            success: '#4CAF50',
+            warning: '#FB8C00',
+          }
+        }
+
         const { createVuetify } = Vuetify;
-        const vuetify = createVuetify();
+        const vuetify = createVuetify({
+          theme: {
+            defaultTheme: 'myCustomLightTheme',
+            themes: {
+              myCustomLightTheme,
+            }
+          }
+        });
 
         const app = Vue.createApp({
           components: {

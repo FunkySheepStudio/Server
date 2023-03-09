@@ -46,10 +46,13 @@ export default {
 </script>
 
 <template>
-  <div>
-    <div id="contenedorQR" class="contenedorQR"></div>
-  </div>
+  <div id="contenedorQR" class="contenedorQR" />
 </template>
 
 <style>
+    .contenedorQR {
+      display: flex;
+      justify-content: center;
+      padding: 10px;
+    }
 </style>
