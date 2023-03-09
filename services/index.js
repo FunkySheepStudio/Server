@@ -1,9 +1,10 @@
 const fs = require('fs');
 var path = require('path');
-var url = require('url');
+var events = require('events');
 
 module.exports = class Services {
     config = require('./config.json')
+    eventEmitter = new events.EventEmitter();
 
     constructor() {
       this.all = []

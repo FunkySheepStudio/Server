@@ -4,6 +4,7 @@ const Ws =  require('ws');
 module.exports = class NetworkWs extends Service
 {
     connections = []
+
     constructor(name, services)
     {
         super(name, services)
@@ -36,6 +37,7 @@ module.exports = class NetworkWs extends Service
           ws.on('close', function close() {
             if (ws.key)
             {
+              ref.services.eventEmitter.emit('network-ws-connection-closed', ws.key)
               ref.connections = ref.connections.filter(function(item) {
                 return item.key !== ws.key
               })

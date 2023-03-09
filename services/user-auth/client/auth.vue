@@ -10,36 +10,48 @@ export default {
     }
   },
   mounted() {
-    const self = this;
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+
+    if (urlParams.get('service') === 'user-auth' && urlParams.get('token'))
+    {
+      this.SendNewKey(urlParams.get('token'))
+    } else {
+      const self = this;
 
     this.SendNewKey()
-    function IncreaseTime() {
-      self.time += 1
-      console.log(self.time)
-      if (self.time >= 5)
-      {
-        self.SendNewKey()
-        self.time = 0
+      function IncreaseTime() {
+        self.time += 1
+        if (self.time >= 20)
+        {
+          self.SendNewKey()
+          self.time = 0
+        }
+        setTimeout(IncreaseTime, 1000);
       }
-      setTimeout(IncreaseTime, 1000);
+      IncreaseTime()
     }
-    IncreaseTime()
   },
   methods: {
-    SendNewKey: function() {
-      const array = new Uint32Array(1);
-      window.crypto.getRandomValues(array);
-      let url = new URL(`${window.location.protocol}//${window.location.host}`)
-      url.searchParams.append('service', 'user-auth');
-      url.searchParams.append('token', array.toString());
+    SendNewKey: function(token) {
+      if (!token)
+      {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+        token = array.toString()
 
-      this.url = url.toString()
+        let url = new URL(`${window.location.protocol}//${window.location.host}`)
+        url.searchParams.append('service', 'user-auth');
+        url.searchParams.append('token', token);
+
+        this.url = url.toString()
+      }
 
       var message = {
           service: 'user-auth',
           function: 'AddAuthKey',
           data: {
-            key: array.toString()
+            token
           }
         }
 
@@ -55,7 +67,6 @@ export default {
       <v-card-title> Create new user</v-card-title>
       <qrcode :qrData="url" />
       {{ url }}
-      {{ time }}
     </v-card>
     <v-card>
       <v-card-title> Add new device</v-card-title>
