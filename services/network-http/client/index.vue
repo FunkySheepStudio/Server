@@ -4,15 +4,12 @@ export default {
     'connection': Vue.defineAsyncComponent( () => loadModule('/network-ws/connection.vue', options) )
   },
   data() {
-    return {
-      greeting: 'Home'
-    }
+    return {}
   }
 }
 </script>
 
 <template>
-  <p class="greeting">{{ this.greeting }}</p>
   <connection />
 </template>
 

@@ -62,16 +62,7 @@ export default {
 </script>
 
 <template>
-  <div>
-    <v-card>
-      <v-card-title> Create new user</v-card-title>
-      <qrcode :qrData="url" />
-      {{ url }}
-    </v-card>
-    <v-card>
-      <v-card-title> Add new device</v-card-title>
-    </v-card>
-  </div>
+  <qrcode :qrData="url" />
 </template>
 
 <style>
