@@ -5,11 +5,13 @@ export default {
   },
   data() {
     return {
+      authenticated: false,
       url: '',
       time: 0
     }
   },
   mounted() {
+    emitter.on('message', this.OnMessage)
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
 
@@ -33,6 +35,15 @@ export default {
     }
   },
   methods: {
+    OnMessage: function(message) {
+      if (message.service === 'user-auth')
+      {
+        if (message.function === 'GetUser')
+        {
+          this.authenticated = true
+        }
+      }
+    },
     SendNewKey: function(token) {
       if (!token)
       {
@@ -62,10 +73,11 @@ export default {
 </script>
 
 <template>
-  <div class="d-flex justify-center">
+  <div v-if="!authenticated" class="d-flex justify-center">
       <v-card>
         <v-card-title>Use your mobile to scan</v-card-title>
         <qrcode :qrData="url" />
+        {{ url }}
       </v-card>
     </div>
 </template>

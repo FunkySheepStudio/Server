@@ -22,6 +22,7 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader/dist/vue3-sfc-loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/3.1.7/vuetify.min.js"></script>
+    <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
     <script>
 
         const options = {
@@ -84,6 +85,7 @@
         app.mount('#app');
   
         var socket
+        var emitter = mitt()
 
       </script>
 </body>

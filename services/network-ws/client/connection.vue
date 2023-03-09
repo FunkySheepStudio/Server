@@ -32,6 +32,11 @@ export default {
         this.connected = true
       }
 
+      socket.addEventListener('message', function (event) {
+        let message = JSON.parse(event.data)
+        emitter.emit('message', message)
+      });
+
       socket.onclose = () => {
         this.connected = false
         setTimeout(this.connect(), 5000);

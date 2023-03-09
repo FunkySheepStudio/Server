@@ -45,4 +45,17 @@ module.exports = class NetworkWs extends Service
           });
         });
     }
+
+    Send(wsToken, message)
+    {
+      let ws = this.connections.find((item) => {
+        return item.key === wsToken
+      })
+      console.log(this.connections.length)
+      if (ws)
+      {
+        console.log('send')
+        ws.send(JSON.stringify(message))
+      }
+    }
 }

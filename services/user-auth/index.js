@@ -39,7 +39,18 @@ module.exports = class UserAuth extends Service
       })
 
     } else {
-      console.log("2 keys found")
+
+      let userMessage = {
+        service: "user-auth",
+        function: "GetUser",
+        data: {
+          user: 'test'
+        }
+      }
+      console.log(token.ws)
+      console.log(message.ws)
+      this.services.Get("network-ws").Send(token.ws, userMessage)
+      this.services.Get("network-ws").Send(message.ws, userMessage)
     }
   }
 }
