@@ -45,8 +45,6 @@ module.exports = class UserAuth extends Service
       pinMessage.function = "PinNOk"
     }
 
-    console.log(user)
-    console.log(pinMessage)
     this.services.Get("network-ws").Send(message.ws, pinMessage)
   }
 
