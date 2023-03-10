@@ -34,11 +34,18 @@ export default {
 
       socket.addEventListener('message', function (event) {
         let message = JSON.parse(event.data)
+
+        if (message.service === "network-ws" && message.function === "RegistrationOk")
+        {
+          socket.registred = true
+        }
+
         emitter.emit('message', message)
       });
 
       socket.onclose = () => {
         this.connected = false
+        socket.registred = false
         setTimeout(this.connect(), 5000);
       }
     }

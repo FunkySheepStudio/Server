@@ -6,7 +6,7 @@ export default {
     return {
       count: 0,
       pin: '',
-      status: 'Use your mobile to scan'
+      status: 'Enter you pin'
     }
   },
   mounted() {
@@ -35,14 +35,11 @@ export default {
     OnMessage: function(message) {
       if (message.service === 'user-auth')
       {
-        if (message.function === 'ConfirmPin')
-        {
-          this.status = 'Please confirm'
-        }
-
         if (message.function === 'PinOk')
         {
           this.status = 'Pin is ok'
+          message.pin = sessionStorage.setItem('pin', this.pin)
+          emitter.emit('user-auth-pinOk')
         }
 
         if (message.function === 'PinNOk')

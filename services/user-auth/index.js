@@ -38,11 +38,22 @@ module.exports = class UserAuth extends Service
     if (!user.pin)
     {
       user.pin = message.data.pin
-      pinMessage.function = "ConfirmPin"
+      pinMessage.function = "PinOk"
     } else if (user.pin === message.data.pin && device) {
       pinMessage.function = "PinOk"
     } else {
       pinMessage.function = "PinNOk"
+    }
+
+    // Register the user on the connection
+    if (pinMessage.function === "PinOk")
+    {
+      var connection = this.services.Get("network-ws").connections.find((item) => {
+        return item.key === message.ws
+      })
+
+      connection.user = user.id
+      connection.device = device.id
     }
 
     this.services.Get("network-ws").Send(message.ws, pinMessage)
@@ -69,10 +80,23 @@ module.exports = class UserAuth extends Service
 
     } else {
 
-      let userId = crypto.randomUUID()
-      this.services.Get("users").users.push({
-        id: userId
+      // if the connection is authenticated
+      let connection = this.services.Get("network-ws").connections.find((item) => {
+        return item.key === message.ws
       })
+
+      var userId
+
+      // else we create a new user
+      if (!connection.user)
+      {
+        userId = crypto.randomUUID()
+        this.services.Get("users").users.push({
+          id: userId
+        })
+      } else {
+        userId = connection.user
+      }
 
       let userMessage = {
         service: "user-auth",
@@ -88,13 +112,17 @@ module.exports = class UserAuth extends Service
         user: userId
       })
 
-      userMessage.device = crypto.randomUUID()
-      this.services.Get("network-ws").Send(message.ws, userMessage)
+      // Send back the data if the user is not authenticated
+      if (!connection.user)
+      {
+        userMessage.device = crypto.randomUUID()
+        this.services.Get("network-ws").Send(message.ws, userMessage)
 
-      this.services.Get("user-devices").devices.push({
-        id: userMessage.data.device,
-        user: userId
-      })
+        this.services.Get("user-devices").devices.push({
+          id: userMessage.data.device,
+          user: userId
+        })
+      }
     }
   }
 }

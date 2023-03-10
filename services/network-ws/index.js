@@ -31,6 +31,12 @@ module.exports = class NetworkWs extends Service
             {
               ws.key = message.data.wsKey
               ref.connections.push(ws)
+
+              message = {
+                service: "network-ws",
+                function: "RegistrationOk"
+              }
+              ref.Send(ws.key, message)
             }
           });
 
@@ -38,7 +44,7 @@ module.exports = class NetworkWs extends Service
             if (ws.key)
             {
               ref.services.eventEmitter.emit('network-ws-connection-closed', ws.key)
-              ref.connections = ref.connections.filter(function(item) {
+              ref.connections = ref.connections.filter((item) => {
                 return item.key !== ws.key
               })
             }

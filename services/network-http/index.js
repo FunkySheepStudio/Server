@@ -20,6 +20,7 @@ module.exports = class NetworkHttp extends Service
         this.server.listen(this.config.port);
     }
 
+    // Extract the request parameters from the URL
     AddRequestParams(req)
     {
       let q=req.url.split('?'),result={};

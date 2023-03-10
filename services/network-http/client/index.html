@@ -12,7 +12,7 @@
       href="https://cdn.jsdelivr.net/npm/vuetify@3.0.5/dist/vuetify.min.css"
       rel="stylesheet"
     />
-    <title>VUE SPA</title>
+    <title>FunkySheep</title>
 </head>
 
 <body>
@@ -24,6 +24,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vuetify/3.1.7/vuetify.min.js"></script>
     <script src="https://unpkg.com/mitt/dist/mitt.umd.js"></script>
     <script>
+        const { loadModule } = window['vue3-sfc-loader'];
+        const { createVuetify } = Vuetify;
+        var socket
+        var emitter = mitt()
 
         const options = {
           moduleCache: {
@@ -45,8 +49,6 @@
             document.head.insertBefore(style, ref);
           },
         }
-    
-        const { loadModule } = window['vue3-sfc-loader'];
 
         const myCustomLightTheme = {
           dark: true,
@@ -64,7 +66,6 @@
           }
         }
 
-        const { createVuetify } = Vuetify;
         const vuetify = createVuetify({
           theme: {
             defaultTheme: 'myCustomLightTheme',
@@ -83,10 +84,6 @@
         .use(vuetify);
     
         app.mount('#app');
-  
-        var socket
-        var emitter = mitt()
-
       </script>
 </body>
 </html>

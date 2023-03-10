@@ -8,34 +8,60 @@ export default {
     return {
       authenticated: false,
       user: '',
+      device: '',
       url: '',
       time: 0
     }
   },
   mounted() {
     emitter.on('message', this.OnMessage)
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-
-    if (urlParams.get('service') === 'user-auth' && urlParams.get('token'))
+    if (socket && socket.registred === true && socket.readyState === 1)
     {
-      this.SendNewKey(urlParams.get('token'))
-    } else {
-      const self = this;
-      this.SendNewKey()
-      function IncreaseTime() {
-          self.time += 1
-          if (self.time >= 20)
-          {
-            self.SendNewKey()
-            self.time = 0
-          }
-          setTimeout(IncreaseTime, 1000);
-        }
-        IncreaseTime()
+      this.Start()
     }
   },
   methods: {
+    Start: function() {
+      this.user = localStorage.getItem('user')
+      this.device = localStorage.getItem('device')
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+
+      emitter.on('user-auth-pinOk', () => {
+        this.authenticated = true
+      })
+
+      if (this.user && this.device)
+      {
+        if (urlParams.get('service') === 'user-auth' && urlParams.get('token'))
+        {
+          emitter.on('user-auth-pinOk', () => {
+            this.SendNewKey(urlParams.get('token'))
+          })
+        }
+      } else {
+        if (urlParams.get('service') === 'user-auth' && urlParams.get('token'))
+        {
+          this.SendNewKey(urlParams.get('token'))
+        } else {
+          const self = this;
+          this.SendNewKey()
+          function IncreaseTime() {
+              self.time += 1
+              if (self.time >= 20)
+              {
+                self.SendNewKey()
+                self.time = 0
+              }
+              if (!self.user && !self.device)
+              {
+                setTimeout(IncreaseTime, 1000);
+              }
+            }
+            IncreaseTime()
+        }
+      }
+    },
     OnMessage: function(message) {
       if (message.service === 'user-auth')
       {
@@ -45,12 +71,12 @@ export default {
           localStorage.setItem('user', message.data.user)
           localStorage.setItem('device', message.data.device)
         }
+      } else if (message.service === "network-ws" && message.function === "RegistrationOk")
+      {
+        this.Start()
       }
     },
     SendNewKey: function(token) {
-      if (this.user !== '')
-        return
-        
       if (!token)
       {
         const array = new Uint32Array(1);
@@ -65,12 +91,18 @@ export default {
       }
 
       var message = {
-          service: 'user-auth',
-          function: 'AddAuthKey',
-          data: {
-            token
-          }
+        service: 'user-auth',
+        function: 'AddAuthKey',
+        data: {
+          token
         }
+      }
+
+      if (this.user && this.device)
+      {
+        message.user = this.user
+        message.device = this.device
+      }
 
       socket.send(JSON.stringify(message))
     }
@@ -81,11 +113,12 @@ export default {
 <template>
   <div v-if="!authenticated" class="d-flex justify-center">
       <v-card
-        v-if="user == ''"
+        v-if="!user && !device"
         class="text-center"
       >
         <v-card-title>Use your mobile to scan</v-card-title>
         <qrcode :qrData="url" />
+        {{ url }}
       </v-card>
       <pincode v-else/>
   </div>
